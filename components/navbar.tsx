@@ -10,7 +10,7 @@ type Props = {}
 
 export default function Nav({}:Props) {
   return (
-    <div className="border-b hidden md:block">
+    <div className="border-b border-gold/50 hidden md:block">
       <Navbar>
       <NavbarContent as="div" justify="end">
         <Dropdown placement="bottom-end">
