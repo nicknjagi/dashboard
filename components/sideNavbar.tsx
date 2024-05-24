@@ -102,7 +102,7 @@ export default function SideNavbar({}: Props) {
                   href={link.href}
                   variant="light"
                   className={clsx("flex md:justify-start gap-3 min-w-6", {
-                    "bg-cWhite text-forrestGreen hover:text-cWhite":
+                    "bg-cWhite text-forrestGreen focus:text-forrestGreen hover:text-cWhite":
                       pathname === link.href,
                     "max-w-fit": isCollapsed,
                   })}
