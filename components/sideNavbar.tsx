@@ -52,7 +52,7 @@ export default function SideNavbar({}: Props) {
       className={clsx(
         `flex md:flex-col justify-between md:justify-normal p-4 w-full transition-all duration-200 ease-out origin-left ${
           isCollapsed ? "md:w-fit" : " md:px-6 md:w-full"
-        } md:max-w-[280px] border-b md:border-r relative`
+        } md:max-w-[280px] border-b md:border-r border-gold/50 relative`
       )}
     >
       <div className="flex items-center gap-2 md:mt-4 md:mb-8 relative">
@@ -66,7 +66,7 @@ export default function SideNavbar({}: Props) {
         {!isCollapsed && (
           <h2 className="uppercase leading-4 hidden md:block">
             my mind{" "}
-            <span className="block font-semibold text-[#C18729]">capsule</span>
+            <span className="block font-semibold text-gold">capsule</span>
           </h2>
         )}
       </div>
@@ -156,7 +156,7 @@ export default function SideNavbar({}: Props) {
             </Button>
           </Tooltip>
         </li>
-        <li className='md:hidden'>
+        <li className='ml-2 md:hidden'>
           <Dropdown placement="bottom-end">
             <DropdownTrigger>
               <Avatar
