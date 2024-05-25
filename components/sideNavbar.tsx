@@ -2,7 +2,7 @@
 
 import { Button } from '@nextui-org/button'
 import clsx from 'clsx'
-import {LayoutDashboard, PanelLeft, Settings, SquareKanban, UsersRound} from 'lucide-react'
+import {LayoutDashboard, LucideIcon, Menu, PanelLeft, Settings, SquareKanban, UsersRound} from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -11,10 +11,17 @@ import { useState } from 'react'
 import { useWindowWidth } from '@react-hook/window-size'
 import {DropdownItem, DropdownTrigger, Dropdown, DropdownMenu} from "@nextui-org/dropdown";
 import {Avatar} from "@nextui-org/avatar";
+import MenuMobile from './menuMobile'
 
 type Props = {}
 
-const links=[
+type LinkNav = {
+  title:string;
+  href:string;
+  icon:LucideIcon;
+}
+
+export const links:LinkNav[] = [
   {
     title: "Dashboard",
     href: "/",
@@ -64,21 +71,24 @@ export default function SideNavbar({}: Props) {
           alt="logo"
         />
         {!isCollapsed && (
-          <h2 className="uppercase leading-4 hidden md:block">
+          <h2 className="uppercase leading-4 ">
             my mind{" "}
             <span className="block font-semibold text-gold">capsule</span>
           </h2>
         )}
       </div>
       <ul
-        className={clsx("flex flex-row items-center md:flex-col gap-1 md:gap-2", {
-          "md:items-center": isCollapsed,
-          "md:items-stretch": !isCollapsed,
-        })}
+        className={clsx(
+          "flex flex-row items-center md:flex-col gap-1 md:gap-2",
+          {
+            "md:items-center": isCollapsed,
+            "md:items-stretch": !isCollapsed,
+          }
+        )}
       >
         {links.map((link, i) => {
           return (
-            <li key={i}>
+            <li className={"hidden md:block"} key={i}>
               <Tooltip
                 content={link.title}
                 classNames={{
@@ -93,7 +103,6 @@ export default function SideNavbar({}: Props) {
                     `${isCollapsed ? "" : mobileWidth ? "" : "hidden"}`,
                   ],
                 }}
-                showArrow={true}
                 color="foreground"
                 placement={mobileWidth ? "bottom" : "right"}
               >
@@ -109,7 +118,7 @@ export default function SideNavbar({}: Props) {
                 >
                   <link.icon aria-label={link.title} />
                   <span
-                    className={clsx("hidden", {
+                    className={clsx("", {
                       "md:hidden": isCollapsed,
                       "md:inline": !isCollapsed,
                     })}
@@ -136,7 +145,6 @@ export default function SideNavbar({}: Props) {
                 `${isCollapsed ? "" : mobileWidth ? "" : "hidden"}`,
               ],
             }}
-            showArrow={true}
             placement="right"
           >
             <Button
@@ -156,30 +164,8 @@ export default function SideNavbar({}: Props) {
             </Button>
           </Tooltip>
         </li>
-        <li className='ml-2 md:hidden'>
-          <Dropdown placement="bottom-end">
-            <DropdownTrigger>
-              <Avatar
-                isBordered
-                as="button"
-                className="transition-transform"
-                color="secondary"
-                name="Jason Hughes"
-                size="sm"
-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-              />
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Profile Actions" variant="flat">
-              <DropdownItem key="profile" className="h-14 gap-2">
-                <p className="font-semibold">Signed in as</p>
-                <p className="font-semibold">zoey@example.com</p>
-              </DropdownItem>
-              <DropdownItem key="profile">Profile</DropdownItem>
-              <DropdownItem key="logout" color="danger">
-                Log Out
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+        <li className="ml-2 md:hidden">
+          <MenuMobile />
         </li>
       </ul>
     </nav>
