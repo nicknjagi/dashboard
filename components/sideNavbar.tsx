@@ -9,8 +9,6 @@ import { usePathname } from 'next/navigation'
 import {Tooltip} from "@nextui-org/tooltip";
 import { useState } from 'react'
 import { useWindowWidth } from '@react-hook/window-size'
-import {DropdownItem, DropdownTrigger, Dropdown, DropdownMenu} from "@nextui-org/dropdown";
-import {Avatar} from "@nextui-org/avatar";
 import MenuMobile from './menuMobile'
 
 type Props = {}
