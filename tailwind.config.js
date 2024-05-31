@@ -15,7 +15,7 @@ module.exports = {
       },
       colors:{
         forrestGreen: "#013132",
-        cWhite:'#F4F7FA',
+        cultured:'#F4F7FA',
         gold:'#C18729'
       }
     },
