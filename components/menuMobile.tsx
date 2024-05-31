@@ -41,12 +41,12 @@ export default function MenuMobile({}: Props) {
                           as={Link}
                           href={link.href}
                           variant="light"
-                          className={clsx("flex justify-start gap-3 min-w-6", {
-                            "bg-cWhite text-forrestGreen focus:text-forrestGreen hover:text-cWhite":
+                          className={clsx("flex justify-start gap-3 rounded-lg px-1 min-w-6", {
+                            "bg-cultured text-forrestGreen focus:text-forrestGreen hover:text-cultured":
                               pathname === link.href
                           })}
                         >
-                          <link.icon aria-label={link.title} />
+                          {/* <link.icon aria-label={link.title} /> */}
                           <span>{link.title}</span>
                         </Button>
                       </div>
