@@ -43,7 +43,7 @@ export default function CreateAccount({}: Props) {
     if(data.email !== emailParam){
       setError('email', {
         type: "client",
-        message: 'Use the email that got the invite'
+        message: 'Use the email that received the invite'
       });
       return
     }
@@ -71,7 +71,7 @@ export default function CreateAccount({}: Props) {
     <div className="flex h-[calc(100vh-100px)] items-center ">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-3 border border-cultured/20  w-full max-w-lg mx-auto p-4 sm:p-8 shadow-lg"
+        className="flex flex-col gap-4 border-2 border-cultured/20 rounded-lg w-full max-w-lg mx-auto p-4 sm:p-8 shadow-lg"
       >
         <div className="mb-2">
           <h1 className="text-xl md:font-medium">Create an account</h1>
@@ -89,7 +89,6 @@ export default function CreateAccount({}: Props) {
               inputWrapper: [
                 "bg-inherit",
                 "border-cultured/20",
-                "border",
                 "hover:disable:cursor-not-allowed"
               ],
             }}
@@ -111,8 +110,7 @@ export default function CreateAccount({}: Props) {
               innerWrapper: "bg-inherit",
               inputWrapper: [
                 "bg-inherit",
-                "border-cultured/20",
-                "border"
+                "border-cultured/20"
               ],
             }}
             label="Password"
@@ -133,8 +131,7 @@ export default function CreateAccount({}: Props) {
               innerWrapper: "bg-inherit",
               inputWrapper: [
                 "bg-inherit",
-                "border-cultured/20",
-                "border"
+                "border-cultured/20"
               ],
             }}
             label="Confirm Password"
