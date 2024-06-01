@@ -1,55 +1,50 @@
+import { TSignUpSchema } from "@/types";
 import axios from "axios";
-import { generateUniqueToken } from "./auth";
-import { render } from "@react-email/render";
-import nodemailer from "nodemailer";
-// import Email from "@/components/emailTemplates/email";
+import PocketBase from 'pocketbase'
+
+const pb = new PocketBase('http://127.0.0.1:8090');
 
 // const BASE_URL = 'https://mymindcapsule.pockethost.io/api';
-const BASE_URL = "http://127.0.0.1:8090/api";
+// const BASE_URL = "http://127.0.0.1:8090/api/collections";
 
-async function registerUser(email: string, password: string) {
+export async function registerUser(user: TSignUpSchema) {
   try {
-    const response = await axios.post(`${BASE_URL}/users`, {
-      email,
-      password,
-      passwordConfirm: password,
-    });
-    return response.data;
+    const record = await pb.collection('users').create(user);
   } catch (error) {
     console.error('Error registering user:', error);
     throw error;
   }
 }
 
-async function loginUser(email: string, password: string) {
-  try {
-    const response = await axios.post(`${BASE_URL}/auth/login`, {
-      email,
-      password,
-    });
-    return response.data.token;
-  } catch (error) {
-    console.error('Failed to login  user: ', error);
-    throw error;
-  }
-}
+// async function loginUser(email: string, password: string) {
+//   try {
+//     const response = await axios.post(`${BASE_URL}/auth/login`, {
+//       email,
+//       password,
+//     });
+//     return response.data.token;
+//   } catch (error) {
+//     console.error('Failed to login  user: ', error);
+//     throw error;
+//   }
+// }
 
-async function createRecord(
-  token: string,
-  collectionName: string,
-  data: object
-) {
-  const response = await axios.post(
-    `${BASE_URL}/collections/${collectionName}/records`,
-    data,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  return response.data;
-}
+// async function createRecord(
+//   token: string,
+//   collectionName: string,
+//   data: object
+// ) {
+//   const response = await axios.post(
+//     `${BASE_URL}/collections/${collectionName}/records`,
+//     data,
+//     {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     }
+//   );
+//   return response.data;
+// }
 
 
 // (async () => {
@@ -75,7 +70,7 @@ export async function sendEmail(email:string) {
     return response.data;
   } catch (error) {
     console.error('Error sending email:', error);
-    throw error;
+    return {message: "error"}
   }
 }
 
