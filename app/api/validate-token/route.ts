@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
       const expiry = new Date();
       expiry.setTime(expiry.getTime() + 60 * 60 * 1000);
 
-      const response = NextResponse.redirect(`${req.nextUrl.origin}/create-account`);
+      const response = NextResponse.redirect(`${req.nextUrl.origin}/create-account?email=${email}`);
 
       // Set the cookie in the response
       response.cookies.set(cookieName, cookieValue, { expires: expiry, httpOnly: true });
