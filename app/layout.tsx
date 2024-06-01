@@ -5,6 +5,7 @@ import { Providers } from "./providers";
 import clsx from "clsx";
 import SideNavbar from "@/components/sideNavbar";
 import Nav from "@/components/navbar";
+import { Toaster } from "react-hot-toast";
 export const metadata: Metadata = {
 	title: {
 		default: 'Dashboard',
@@ -37,6 +38,7 @@ export default function RootLayout({
 							<Nav />
 							<div className="p-4 max-w-5xl mx-auto">{children}</div>
 						</main>
+						<Toaster position="top-right" />
 					</div>
 				</Providers>
 			</body>
