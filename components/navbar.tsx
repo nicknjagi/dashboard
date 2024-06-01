@@ -5,10 +5,18 @@ import {DropdownItem, DropdownTrigger, Dropdown, DropdownMenu} from "@nextui-org
 import {  Navbar, NavbarContent} from "@nextui-org/navbar";
 import {Avatar} from "@nextui-org/avatar";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { hideRoutes } from "./sideNavbar";
 
 type Props = {}
 
 export default function Nav({}:Props) {
+  const pathname = usePathname()
+
+  if (hideRoutes.includes(pathname)) {
+    return null;
+  }
+
   return (
     <div className="border-b border-gold/50 hidden md:block">
       <Navbar>
