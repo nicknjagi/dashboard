@@ -44,9 +44,9 @@ const Email: React.FC<EmailProps> = ({ url }) => {
     >
     <Html lang="en">
       <Head />
-      <Body className="m-auto px-4">
+      <Body className="m-auto px-4 py-12 bg-cultured">
         <Container
-          className="border border-solid border-neutral-200 rounded my-[40px] w-full p-5 max-w-[465px] mx-auto"
+          className="bg-white border border-solid border-neutral-200 rounded my-[40px] w-full p-5 max-w-[465px] mx-auto"
         >
           <Heading className="text-forrestGreen text-2xl">
             Create your account
