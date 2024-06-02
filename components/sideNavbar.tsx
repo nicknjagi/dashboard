@@ -5,12 +5,11 @@ import clsx from 'clsx'
 import {LayoutDashboard, LucideIcon, PanelLeft, Settings, SquareKanban, UserCog, UsersRound} from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import {Tooltip} from "@nextui-org/tooltip";
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useWindowWidth } from '@react-hook/window-size'
 import MenuMobile from './menuMobile'
-import { pb } from '@/app/lib/utils'
 
 type Props = {}
 
@@ -54,20 +53,11 @@ export default function SideNavbar({}: Props) {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const pathname = usePathname()
   const width = useWindowWidth()
-  const router = useRouter()
   const mobileWidth = width < 768
 
   function toggleSidebar(){
     setIsCollapsed(!isCollapsed)
   }
-
-  const token = pb.authStore.token;
-
-  useEffect(() => {
-    if (!token) {
-      router.push('/login');
-    }
-  }, [token, router]);
 
   if (hideRoutes.includes(pathname)) {
     return null;
