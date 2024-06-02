@@ -34,6 +34,7 @@ const SendTokenForm: React.FC<Props> = ({ onClose }) => {
       onClose()
     } catch (error) {
       console.error(error);
+      toast.error('Something went wrong')
     } 
   }
 
