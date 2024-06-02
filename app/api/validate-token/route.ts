@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
     const sendResult = await transporter.sendMail({
       from: SMTP_EMAIL,
       to:email,
-      subject:'test mail',
+      subject:'Create your account',
       html:generateHtml(email, token)
     });
     return NextResponse.json({ message: 'success' });
