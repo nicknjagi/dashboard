@@ -4,15 +4,17 @@ import {  generateUniqueToken } from '@/app/lib/auth';
 import nodemailer from "nodemailer";
 import { generateHtml } from '@/components/emailTemplates/email';
 
+const JWT_SECRET = process.env.JWT_SECRET!;
+const SMTP_EMAIL = process.env.SMTP_EMAIL!;
+const SMTP_PASSWORD = process.env.SMTP_PASSWORD!;
+
 export async function GET(req: NextRequest) {
-  // Get the token from the query parameters
   const token = req.nextUrl.searchParams.get('token');
   const email = req.nextUrl.searchParams.get('email');
-  const jwtSecret = process.env.JWT_SECRET!
 
   try {
     // Verify the token using the JWT secret
-    const decoded= jwt.verify(token as string, jwtSecret) as{email:string};
+    const decoded= jwt.verify(token as string, JWT_SECRET) as{email:string};
 
     // check if token belongs to the right user
     if(decoded.email !== email) {
@@ -22,9 +24,9 @@ export async function GET(req: NextRequest) {
       const cookieName = 'jwt_token';
       const cookieValue = token as string;
 
-      // Set the cookie to expire in 1 hour 
+      // Set the cookie to expire in 30 mins 
       const expiry = new Date();
-      expiry.setTime(expiry.getTime() + 60 * 60 * 1000);
+      expiry.setTime(expiry.getTime() + 30 * 60 * 1000);
 
       const response = NextResponse.redirect(`${req.nextUrl.origin}/create-account?email=${email}`);
 
@@ -35,7 +37,7 @@ export async function GET(req: NextRequest) {
     }
   } catch (err) {
     console.log(err);
-    return NextResponse.json({ message: 'Invalid or expired token' });
+    return NextResponse.json({ message: 'Invalid or expired token' }, { status: 403 });
   }
 }
 
@@ -44,7 +46,6 @@ export async function POST(req: NextRequest) {
   const body = await req.json(); // Parse the JSON body
   const {email} = body
 
-  const { SMTP_EMAIL, SMTP_PASSWORD } = process.env;
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
