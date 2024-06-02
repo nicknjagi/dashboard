@@ -4,28 +4,27 @@ import { TLoginSchema, TSignUpSchema } from "@/types";
 import axios from "axios";
 import PocketBase from 'pocketbase'
 
-export const pb = new PocketBase('http://127.0.0.1:8090');
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+// const BASE_URL = 'https://mymindcapsule.pockethost.io';
 
-// const BASE_URL = 'https://mymindcapsule.pockethost.io/api';
-// const BASE_URL = "http://127.0.0.1:8090/api/collections";
+export const pb = new PocketBase(BASE_URL);
 
 export async function registerUser(user: TSignUpSchema) {
   try {
     const record = await pb.collection('users').create(user);
+    return {success: true}
   } catch (error) {
     console.error('Error registering user:', error);
     throw error;
   }
 }
 
-export async function loginUser(user: TLoginSchema) {
-  const url = 'http://localhost:3000/api/auth/login'
+export async function loginUser(user: TLoginSchema) {  
   try {
-    const response = await axios.post(`${url}`, {
+    const response = await axios.post('/api/auth/login', {
       user,
     });    
     const authData = response.data.data;
-    // localStorage.setItem('pb_authStore', JSON.stringify(response.data.data))
      // Save auth data in pb.authStore
     pb.authStore.save(authData.token, authData.record);
     return response.data.data;
@@ -48,9 +47,8 @@ export async function logout(){
 }
 
 export async function sendEmail(email:string) {
-  const url = 'http://localhost:3000/api/validate-token'
   try {
-    const response = await axios.post(`${url}`, {
+    const response = await axios.post(`/api/validate-token`, {
       email,
     });
     return response.data;
