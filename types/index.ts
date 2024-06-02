@@ -17,7 +17,7 @@ export const SignUpSchema = z.object({
 export type TSignUpSchema = z.infer<typeof SignUpSchema>
 
 export const LoginSchema = z.object({
-  email: z.string().email(),
+  identity: z.string().email(),
   password: z.string().min(1, { message: "Password is required" })
 })
 
