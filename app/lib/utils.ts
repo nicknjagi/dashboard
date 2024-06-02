@@ -19,13 +19,31 @@ export async function registerUser(user: TSignUpSchema) {
 }
 
 export async function loginUser(user: TLoginSchema) {
+  const url = 'http://localhost:3000/api/auth/login'
   try {
-    const authData = await pb.collection('users').authWithPassword(user.email, user.password);
-    console.log(authData);
-
+    const response = await axios.post(`${url}`, {
+      user,
+    });    
+    const authData = response.data.data;
+    // localStorage.setItem('pb_authStore', JSON.stringify(response.data.data))
+     // Save auth data in pb.authStore
+    pb.authStore.save(authData.token, authData.record);
+    return response.data.data;
   } catch (error) {
-    console.error('Failed to login  user: ', error);
-    throw error;
+    console.error('Error trying to login:', error);
+    throw new Error('Error trying to login')
+  }
+}
+
+export async function logout(){
+  try {
+    const response = await axios.get('/api/auth/logout');
+    // Clear PocketBase auth store
+    pb.authStore.clear();
+    return {success:true}
+  } catch (error) {
+    console.error('Error logging out:', error);
+    throw new Error('Error logging out')
   }
 }
 
