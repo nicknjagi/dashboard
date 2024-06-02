@@ -2,14 +2,28 @@ import { Button } from "@nextui-org/button";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/dropdown";
 import { Menu } from "lucide-react";
 import { links } from "./sideNavbar";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
+import { logout, pb } from "@/app/lib/utils";
+import { User } from "@/types";
 
 type Props = {}
+
 export default function MenuMobile({}: Props) {
   const pathname = usePathname()
+  const router = useRouter()
+  const userModel = pb.authStore.model as User
 
+  const handleLogout = async () => {
+    try {
+      const {success} = await logout();
+      router.push('/login');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+  
   return (
     <Dropdown
             classNames={{
@@ -30,7 +44,7 @@ export default function MenuMobile({}: Props) {
             >
               <DropdownItem textValue='user info' key="profile" className="h-14 gap-2">
                 <p className="font-semibold">Signed in as</p>
-                <p className="font-semibold">zoey@example.com</p>
+                <p className="font-semibold">{userModel.email}</p>
               </DropdownItem>
               <DropdownItem textValue='nav links' key={'links'}>
                 <div className="flex flex-col items-start md:hidden">
@@ -57,7 +71,7 @@ export default function MenuMobile({}: Props) {
 
               <DropdownItem textValue='profile' key="profile-mobile">Profile</DropdownItem>
               <DropdownItem textValue='logout' key="logout" color="danger">
-                Log Out
+                <button onClick={handleLogout}>Log Out</button>
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
