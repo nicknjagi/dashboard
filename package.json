@@ -26,6 +26,7 @@
 		"@react-aria/visually-hidden": "^3.8.10",
 		"@react-email/components": "^0.0.19",
 		"@react-email/render": "^0.0.15",
+		"@react-email/tailwind": "0.0.18",
 		"@react-hook/window-size": "^3.1.1",
 		"@types/node": "20.5.7",
 		"@types/nodemailer": "^6.4.15",
