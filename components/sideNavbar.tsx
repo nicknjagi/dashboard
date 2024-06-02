@@ -2,14 +2,15 @@
 
 import { Button } from '@nextui-org/button'
 import clsx from 'clsx'
-import {LayoutDashboard, LucideIcon, Menu, PanelLeft, Settings, SquareKanban, UsersRound} from 'lucide-react'
+import {LayoutDashboard, LucideIcon, PanelLeft, Settings, SquareKanban, UserCog, UsersRound} from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import {Tooltip} from "@nextui-org/tooltip";
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useWindowWidth } from '@react-hook/window-size'
 import MenuMobile from './menuMobile'
+import { pb } from '@/app/lib/utils'
 
 type Props = {}
 
@@ -39,17 +40,37 @@ export const links:LinkNav[] = [
     title: "Settings",
     href: "/settings",
     icon: Settings
+  },
+  {
+    title: "Facilitators",
+    href: "/facilitators",
+    icon: UserCog 
   }
 ]
+
+export const hideRoutes:string[] = ['/create-account', '/login']
 
 export default function SideNavbar({}: Props) {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const pathname = usePathname()
   const width = useWindowWidth()
+  const router = useRouter()
   const mobileWidth = width < 768
 
   function toggleSidebar(){
     setIsCollapsed(!isCollapsed)
+  }
+
+  const token = pb.authStore.token;
+
+  useEffect(() => {
+    if (!token) {
+      router.push('/login');
+    }
+  }, [token, router]);
+
+  if (hideRoutes.includes(pathname)) {
+    return null;
   }
 
   return (
@@ -108,8 +129,8 @@ export default function SideNavbar({}: Props) {
                   as={Link}
                   href={link.href}
                   variant="light"
-                  className={clsx("flex md:justify-start gap-3 min-w-6", {
-                    "bg-cWhite text-forrestGreen focus:text-forrestGreen hover:text-cWhite":
+                  className={clsx("flex md:justify-start gap-3 min-w-6 rounded-lg", {
+                    "bg-cultured text-forrestGreen focus:text-text-cultured hover:text-cultured":
                       pathname === link.href,
                     "max-w-fit": isCollapsed,
                   })}
@@ -149,7 +170,7 @@ export default function SideNavbar({}: Props) {
               variant="light"
               onClick={toggleSidebar}
               className={clsx(
-                "flex md:justify-start gap-3 hover:bg-cWhite/60 text-neutral-400 hover:text-cWhite w-full min-w-6",
+                "flex md:justify-start gap-3 hover:bg-cultured/60 text-neutral-400 hover:text-cultured w-full min-w-6",
                 { "md:justify-center": isCollapsed }
               )}
             >
