@@ -1,8 +1,10 @@
-import { TSignUpSchema } from "@/types";
+
+
+import { TLoginSchema, TSignUpSchema } from "@/types";
 import axios from "axios";
 import PocketBase from 'pocketbase'
 
-const pb = new PocketBase('http://127.0.0.1:8090');
+export const pb = new PocketBase('http://127.0.0.1:8090');
 
 // const BASE_URL = 'https://mymindcapsule.pockethost.io/api';
 // const BASE_URL = "http://127.0.0.1:8090/api/collections";
@@ -16,18 +18,16 @@ export async function registerUser(user: TSignUpSchema) {
   }
 }
 
-// async function loginUser(email: string, password: string) {
-//   try {
-//     const response = await axios.post(`${BASE_URL}/auth/login`, {
-//       email,
-//       password,
-//     });
-//     return response.data.token;
-//   } catch (error) {
-//     console.error('Failed to login  user: ', error);
-//     throw error;
-//   }
-// }
+export async function loginUser(user: TLoginSchema) {
+  try {
+    const authData = await pb.collection('users').authWithPassword(user.email, user.password);
+    console.log(authData);
+
+  } catch (error) {
+    console.error('Failed to login  user: ', error);
+    throw error;
+  }
+}
 
 // async function createRecord(
 //   token: string,
@@ -69,8 +69,8 @@ export async function sendEmail(email:string) {
     });
     return response.data;
   } catch (error) {
-    console.error('Error sending email:', error);
-    return {message: "error"}
+    console.error('Error sending invite:', error);
+    throw new Error('Error sending invite')
   }
 }
 
