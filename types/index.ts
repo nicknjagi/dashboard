@@ -1,3 +1,4 @@
+import { ClientResponseError } from "pocketbase";
 import {SVGProps} from "react";
 import { z } from "zod";
 
@@ -14,3 +15,14 @@ export const SignUpSchema = z.object({
 })
 
 export type TSignUpSchema = z.infer<typeof SignUpSchema>
+
+export const LoginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1, { message: "Password is required" })
+})
+
+export type TLoginSchema = z.infer<typeof LoginSchema>
+
+export function isClientResponseError(error: unknown): error is ClientResponseError {
+  return error instanceof ClientResponseError;
+}
