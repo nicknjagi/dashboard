@@ -7,8 +7,8 @@ export async function POST(request: NextRequest) {
   const body = await request.json()
 
   try {
-    const { email, password } = body.user as TLoginSchema
-    const authData = await pb.collection('users').authWithPassword(email, password)
+    const { identity, password } = body.user as TLoginSchema
+    const authData = await pb.collection('users').authWithPassword(identity, password)
     const response = NextResponse.json({ data:authData })
     response.cookies.set('auth_token', authData.token, {
       httpOnly: true,
@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
     })
     return response
   } catch (error) {
+    console.log(error);
     if (isClientResponseError(error)) {
       return NextResponse.json({ error: error.response.message }, { status: error?.status })
     }
