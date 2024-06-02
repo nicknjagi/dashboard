@@ -1,12 +1,12 @@
 'use client'
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {DropdownItem, DropdownTrigger, Dropdown, DropdownMenu} from "@nextui-org/dropdown";
 import {  Navbar, NavbarContent} from "@nextui-org/navbar";
 import {Avatar} from "@nextui-org/avatar";
 import { usePathname, useRouter } from "next/navigation";
 import { hideRoutes } from "./sideNavbar";
-import { logout, pb } from "@/app/lib/utils";
+import { logout } from "@/app/lib/utils";
 import { User } from "@/types";
 
 type Props = {}
@@ -14,8 +14,15 @@ type Props = {}
 export default function Nav({}:Props) {
   const pathname = usePathname()
   const router = useRouter()
+  const [userModel, setUserModel] = useState<User | null>(null);
 
-  const userModel = pb.authStore.model as User
+  useEffect(() => {
+    const storedAuthData = localStorage.getItem('pb_authStore');
+    if (storedAuthData) {
+      const { record} = JSON.parse(storedAuthData);
+      setUserModel(record as User);
+    }
+  }, [router]);
 
   const handleLogout = async () => {
     try {
@@ -48,7 +55,7 @@ export default function Nav({}:Props) {
                 className="transition-transform bg-cultured"
                 name="Jason Hughes"
                 size="sm"
-                src={userModel.avatar ? userModel.avatar : '/circle-user-round.svg' }
+                src={userModel?.avatar ? userModel?.avatar : '/circle-user-round.svg' }
               />
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
