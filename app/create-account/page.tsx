@@ -1,64 +1,61 @@
 "use client";
 
-import { SignUpSchema, TSignUpSchema } from "@/types";
+import { isClientResponseError, SignUpSchema, TSignUpSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { useForm } from "react-hook-form";
 import { registerUser } from "../lib/utils";
-import { ClientResponseError } from "pocketbase";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import Image from "next/image";
+import clsx from "clsx";
 
 type Props = {};
 
-function isClientResponseError(error: unknown): error is ClientResponseError {
-  return error instanceof ClientResponseError;
-}
-
 export default function CreateAccount({}: Props) {
-  const router = useRouter(); 
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const emailParam = searchParams.get('email') || '';
+  const emailParam = searchParams.get("email") || "";
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    setError
+    setError,
   } = useForm<TSignUpSchema>({
-    resolver: zodResolver(SignUpSchema)
+    resolver: zodResolver(SignUpSchema),
   });
 
   useEffect(() => {
     if (emailParam) {
-      localStorage.setItem('email', emailParam);
+      localStorage.setItem("email", emailParam);
     }
   }, [searchParams]);
 
   const onSubmit = async (data: TSignUpSchema) => {
-    if(data.email !== emailParam){
-      setError('email', {
+    if (data.email !== emailParam) {
+      setError("email", {
         type: "client",
-        message: 'Use the email that received the invite'
+        message: "Use the email that received the invite",
       });
-      return
+      return;
     }
 
     try {
-      await registerUser(data)
+      await registerUser(data);
       reset();
-      toast.success('Account created successfully. Redirecting to Login...')
-      router.push('/login')
+      toast.success("Account created successfully. Redirecting to Login...");
+      router.push("/login");
     } catch (error) {
       if (isClientResponseError(error)) {
         for (const item in error.response.data) {
           setError(item as keyof TSignUpSchema, {
             type: "server",
-            message: error.response.data[item].message
+            message: error.response.data[item].message,
           });
         }
       } else {
@@ -71,11 +68,25 @@ export default function CreateAccount({}: Props) {
     <div className="flex h-[calc(100vh-100px)] items-center ">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 border-2 border-cultured/20 rounded-lg w-full max-w-lg mx-auto p-4 sm:p-8 shadow-lg"
+        className="flex flex-col gap-4 border-2 border-cultured/20 rounded-lg w-full max-w-lg mx-auto px-4 py-6 sm:p-8 shadow-lg"
       >
+        <div className="flex flex-col justify-center items-center w-full gap-2 mb-4 relative">
+          <Image
+            src="/logo.png"
+            width={35}
+            height={35}
+            className={clsx({ "mx-auto": true })}
+            alt="logo"
+          />
+          <h2 className="uppercase leading-4 ">
+            my mind <span className="font-semibold text-gold">capsule</span>
+          </h2>
+        </div>
         <div className="mb-2">
           <h1 className="text-xl md:font-medium">Create an account</h1>
-          <p className="text-sm text-neutral-400">Fill the form below to create your account</p>
+          <p className="text-sm text-neutral-400">
+            Fill the form below to create your account
+          </p>
         </div>
         <div>
           <Input
@@ -89,7 +100,7 @@ export default function CreateAccount({}: Props) {
               inputWrapper: [
                 "bg-inherit",
                 "border-cultured/20",
-                "hover:disable:cursor-not-allowed"
+                "hover:disable:cursor-not-allowed",
               ],
             }}
             label="Email"
@@ -108,10 +119,7 @@ export default function CreateAccount({}: Props) {
               label: "text-black/50 dark:text-white/90",
               input: ["bg-inherit"],
               innerWrapper: "bg-inherit",
-              inputWrapper: [
-                "bg-inherit",
-                "border-cultured/20"
-              ],
+              inputWrapper: ["bg-inherit", "border-cultured/20"],
             }}
             label="Password"
             placeholder="*********"
@@ -129,10 +137,7 @@ export default function CreateAccount({}: Props) {
               label: "text-black/50 dark:text-white/90",
               input: ["bg-inherit"],
               innerWrapper: "bg-inherit",
-              inputWrapper: [
-                "bg-inherit",
-                "border-cultured/20"
-              ],
+              inputWrapper: ["bg-inherit", "border-cultured/20"],
             }}
             label="Confirm Password"
             placeholder="*********"
