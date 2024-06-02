@@ -23,7 +23,7 @@ export default function MenuMobile({}: Props) {
       console.error('Error logging out:', error);
     }
   };
-  
+
   return (
     <Dropdown
             classNames={{
@@ -44,7 +44,7 @@ export default function MenuMobile({}: Props) {
             >
               <DropdownItem textValue='user info' key="profile" className="h-14 gap-2">
                 <p className="font-semibold">Signed in as</p>
-                <p className="font-semibold">{userModel.email}</p>
+                <p className="font-semibold">{userModel?.email}</p>
               </DropdownItem>
               <DropdownItem textValue='nav links' key={'links'}>
                 <div className="flex flex-col items-start md:hidden">
