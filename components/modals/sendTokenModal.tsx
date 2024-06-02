@@ -31,6 +31,7 @@ export default function SendTokenModal({}: Props) {
         onOpenChange={onOpenChange}
         isDismissable={false}
         isKeyboardDismissDisabled={true}
+        placement="top-center"
       >
         <ModalContent>
           {(onClose) => (
