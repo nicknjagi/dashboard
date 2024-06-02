@@ -26,3 +26,19 @@ export type TLoginSchema = z.infer<typeof LoginSchema>
 export function isClientResponseError(error: unknown): error is ClientResponseError {
   return error instanceof ClientResponseError;
 }
+
+export type User = {
+  id: string;
+  collectionId: string;
+  collectionName: string;
+  username: string;
+  verified: boolean;
+  emailVisibility: boolean;
+  email: string;
+  created: string; // ISO 8601 date string
+  updated: string; // ISO 8601 date string
+  name: string;
+  avatar: string;
+  AccountType: 'ADMIN' | 'FACILITATOR'
+};
+
