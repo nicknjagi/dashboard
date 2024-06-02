@@ -56,16 +56,18 @@ export async function POST(req: NextRequest) {
   const token = generateUniqueToken(email)
 
   try {
+    const html = generateHtml(email, token)
+    
     const sendResult = await transporter.sendMail({
       from: SMTP_EMAIL,
       to:email,
       subject:'Create your account',
-      html:generateHtml(email, token)
+      html
     });
     return NextResponse.json({ message: 'success' });
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ message: 'error' });
+    return NextResponse.json({ success: false }, { status: 500 });
   }
 }
 
