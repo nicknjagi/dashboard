@@ -54,7 +54,7 @@ export default function Login({}: Props) {
         <h1 className="text-xl md:font-medium mb-2">Login</h1>
         <div>
           <Input
-            {...register("email")}
+            {...register("identity")}
             type="email"
             variant={"bordered"}
             classNames={{
@@ -70,8 +70,8 @@ export default function Login({}: Props) {
             label="Email"
             placeholder="email@example.com"
           />
-          {errors.email && (
-            <small className="ml-3 text-red-500">{`${errors.email.message}`}</small>
+          {errors.identity && (
+            <small className="ml-3 text-red-500">{`${errors.identity.message}`}</small>
           )}
         </div>
         <div>
