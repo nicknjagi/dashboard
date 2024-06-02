@@ -4,14 +4,27 @@ import React from "react";
 import {DropdownItem, DropdownTrigger, Dropdown, DropdownMenu} from "@nextui-org/dropdown";
 import {  Navbar, NavbarContent} from "@nextui-org/navbar";
 import {Avatar} from "@nextui-org/avatar";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { hideRoutes } from "./sideNavbar";
+import { logout, pb } from "@/app/lib/utils";
+import { User } from "@/types";
 
 type Props = {}
 
 export default function Nav({}:Props) {
   const pathname = usePathname()
+  const router = useRouter()
+
+  const userModel = pb.authStore.model as User
+
+  const handleLogout = async () => {
+    try {
+      const {success} = await logout();
+      router.push('/login');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
 
   if (hideRoutes.includes(pathname)) {
     return null;
@@ -32,21 +45,20 @@ export default function Nav({}:Props) {
               <Avatar
                 isBordered
                 as="button"
-                className="transition-transform"
-                color="secondary"
+                className="transition-transform bg-cultured"
                 name="Jason Hughes"
                 size="sm"
-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                src={userModel.avatar ? userModel.avatar : '/circle-user-round.svg' }
               />
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
               <DropdownItem key="profile" className="h-14 gap-2" textValue="sign in as">
                 <p className="font-semibold">Signed in as</p>
-                <p className="font-semibold">zoey@example.com</p>
+                <p className="font-semibold">{userModel?.email}</p>
               </DropdownItem>
               <DropdownItem key="profile-nav" textValue="profile">Profile</DropdownItem>
               <DropdownItem key="logout" color="danger" textValue="log out">
-                Log Out
+                <button onClick={handleLogout}>Log Out</button>
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
