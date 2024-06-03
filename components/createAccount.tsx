@@ -11,7 +11,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import Image from "next/image";
 import clsx from "clsx";
-import { registerUser } from "@/app/lib/utils";
+import { registerUser } from "@/app/lib/auth";
 
 type Props = {};
 

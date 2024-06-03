@@ -5,8 +5,9 @@ import { links } from "./sideNavbar";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
-import { logout, pb } from "@/app/lib/utils";
+import { pb } from "@/app/lib/utils";
 import { User } from "@/types";
+import { logout } from "@/app/lib/auth";
 
 type Props = {}
 

@@ -6,7 +6,7 @@ import {  Navbar, NavbarContent} from "@nextui-org/navbar";
 import {Avatar} from "@nextui-org/avatar";
 import { usePathname, useRouter } from "next/navigation";
 import { hideRoutes } from "./sideNavbar";
-import { logout } from "@/app/lib/utils";
+import { logout } from "@/app/lib/auth";
 import { User } from "@/types";
 
 type Props = {}
@@ -17,10 +17,10 @@ export default function Nav({}:Props) {
   const [userModel, setUserModel] = useState<User | null>(null);
 
   useEffect(() => {
-    const storedAuthData = localStorage.getItem('pb_authStore');
+    const storedAuthData = localStorage.getItem('pocketbase_auth');
     if (storedAuthData) {
-      const { record} = JSON.parse(storedAuthData);
-      setUserModel(record as User);
+      const { model} = JSON.parse(storedAuthData);
+      setUserModel(model as User);
     }
   }, [router]);
 
@@ -59,7 +59,7 @@ export default function Nav({}:Props) {
               />
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
-              <DropdownItem key="profile" className="h-14 gap-2" textValue="sign in as">
+              <DropdownItem key="profile" className="h-14 gap-2 focus:hover:bg-default/0 cursor-default" textValue="sign in as">
                 <p className="font-semibold">Signed in as</p>
                 <p className="font-semibold">{userModel?.email}</p>
               </DropdownItem>
