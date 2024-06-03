@@ -1,62 +1,78 @@
-'use client'
+"use client";
 
-import { Button } from '@nextui-org/button'
-import clsx from 'clsx'
-import {LayoutDashboard, LucideIcon, PanelLeft, Settings, SquareKanban, UserCog, UsersRound} from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import {Tooltip} from "@nextui-org/tooltip";
-import { useState } from 'react'
-import { useWindowWidth } from '@react-hook/window-size'
-import MenuMobile from './menuMobile'
+import { Button } from "@nextui-org/button";
+import clsx from "clsx";
+import {
+  LayoutDashboard,
+  LucideIcon,
+  PanelLeft,
+  Settings,
+  SquareKanban,
+  UserCog,
+  UsersRound,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Tooltip } from "@nextui-org/tooltip";
+import { useEffect, useState } from "react";
+import { useWindowWidth } from "@react-hook/window-size";
+import MenuMobile from "./menuMobile";
+import { pb } from "@/app/lib/utils";
+import { User } from "@/types";
 
-type Props = {}
+type Props = {};
 
 type LinkNav = {
-  title:string;
-  href:string;
-  icon:LucideIcon;
-}
+  title: string;
+  href: string;
+  icon: LucideIcon;
+  roles: string[];
+};
 
-export const links:LinkNav[] = [
+export const links: LinkNav[] = [
   {
     title: "Dashboard",
     href: "/",
-    icon: LayoutDashboard
-  },
-  {
-    title: "Users",
-    href: "/users",
-    icon: UsersRound
+    icon: LayoutDashboard,
+    roles: ["ADMIN", "FACILITATOR"],
   },
   {
     title: "Workspaces",
     href: "/workspaces",
-    icon: SquareKanban 
+    icon: SquareKanban,
+    roles: ["ADMIN", "FACILITATOR"],
   },
   {
-    title: "Settings",
-    href: "/settings",
-    icon: Settings
+    title: "Users",
+    href: "/users",
+    icon: UsersRound,
+    roles: ["ADMIN"],
   },
   {
     title: "Facilitators",
     href: "/facilitators",
-    icon: UserCog 
-  }
-]
+    icon: UserCog,
+    roles: ["ADMIN"],
+  },
+];
 
-export const hideRoutes:string[] = ['/create-account', '/login']
+export const hideRoutes: string[] = ["/create-account", "/login"];
 
 export default function SideNavbar({}: Props) {
-  const [isCollapsed, setIsCollapsed] = useState(false)
-  const pathname = usePathname()
-  const width = useWindowWidth()
-  const mobileWidth = width < 768
+  const [isCollapsed, setIsCollapsed] = useState(false);  
+  const [userModel, setUserModel] = useState<User | null>(null);
+  const pathname = usePathname();
+  const width = useWindowWidth();
+  const mobileWidth = width < 768;
 
-  function toggleSidebar(){
-    setIsCollapsed(!isCollapsed)
+  useEffect(() => {
+    const user = pb.authStore.model as User;
+    setUserModel(user);
+  }, []);
+
+  function toggleSidebar() {
+    setIsCollapsed(!isCollapsed);
   }
 
   if (hideRoutes.includes(pathname)) {
@@ -95,50 +111,55 @@ export default function SideNavbar({}: Props) {
           }
         )}
       >
-        {links.map((link, i) => {
-          return (
-            <li className={"hidden md:block"} key={i}>
-              <Tooltip
-                content={link.title}
-                classNames={{
-                  base: [
-                    // arrow color
-                    "before:bg-neutral-400 dark:before:bg-white",
-                    `${isCollapsed ? "" : mobileWidth ? "" : "hidden"}`,
-                  ],
-                  content: [
-                    "shadow-xl",
-                    "text-black bg-gradient-to-br from-white to-neutral-400",
-                    `${isCollapsed ? "" : mobileWidth ? "" : "hidden"}`,
-                  ],
-                }}
-                color="foreground"
-                placement={mobileWidth ? "bottom" : "right"}
-              >
-                <Button
-                  as={Link}
-                  href={link.href}
-                  variant="light"
-                  className={clsx("flex md:justify-start gap-3 min-w-6 rounded-lg", {
-                    "bg-cultured data-[hover=true]:bg-cultured text-forrestGreen cursor-default":
-                      pathname === link.href,
-                    "max-w-fit": isCollapsed,
-                  })}
+        {links
+          .filter((link) => userModel && link.roles.includes(userModel.AccountType))
+          .map((link, i) => {
+            return (
+              <li className={"hidden md:block"} key={i}>
+                <Tooltip
+                  content={link.title}
+                  classNames={{
+                    base: [
+                      // arrow color
+                      "before:bg-neutral-400 dark:before:bg-white",
+                      `${isCollapsed ? "" : mobileWidth ? "" : "hidden"}`,
+                    ],
+                    content: [
+                      "shadow-xl",
+                      "text-black bg-gradient-to-br from-white to-neutral-400",
+                      `${isCollapsed ? "" : mobileWidth ? "" : "hidden"}`,
+                    ],
+                  }}
+                  color="foreground"
+                  placement={mobileWidth ? "bottom" : "right"}
                 >
-                  <link.icon aria-label={link.title} />
-                  <span
-                    className={clsx("", {
-                      "md:hidden": isCollapsed,
-                      "md:inline": !isCollapsed,
-                    })}
+                  <Button
+                    as={Link}
+                    href={link.href}
+                    variant="light"
+                    className={clsx(
+                      "flex md:justify-start gap-3 min-w-6 rounded-lg",
+                      {
+                        "bg-cultured data-[hover=true]:bg-cultured text-forrestGreen cursor-default":
+                          pathname === link.href,
+                        "max-w-fit": isCollapsed,
+                      }
+                    )}
                   >
-                    {link.title}
-                  </span>
-                </Button>
-              </Tooltip>
-            </li>
-          );
-        })}
+                    <link.icon aria-label={link.title} />
+                    <span
+                      className={clsx("", {
+                        "md:hidden": isCollapsed,
+                        "md:inline": !isCollapsed,
+                      })}
+                    >
+                      {link.title}
+                    </span>
+                  </Button>
+                </Tooltip>
+              </li>
+            );
+          })}
         <li className="hidden md:block mt-10">
           <Tooltip
             content={"Show Sidebar"}
