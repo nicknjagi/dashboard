@@ -36,7 +36,7 @@ export default function RootLayout({
 						<SideNavbar />
 						<main className="w-full md:overflow-x-auto">
 							<Nav />
-							<div className="p-4 max-w-5xl mx-auto">{children}</div>
+							<div className="p-4 lg:px-8 max-w-5xl mx-auto lg:mx-0">{children}</div>
 						</main>
 						<Toaster position="top-right" />
 					</div>
