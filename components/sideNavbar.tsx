@@ -6,7 +6,6 @@ import {
   LayoutDashboard,
   LucideIcon,
   PanelLeft,
-  Settings,
   SquareKanban,
   UserCog,
   UsersRound,
