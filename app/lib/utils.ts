@@ -13,8 +13,22 @@ export async function sendEmail(email:string) {
     });
     return response.data;
   } catch (error) {
-    console.error('Error sending invite:', error);
+    console.log('Error sending invite:', error);
     throw new Error('Error sending invite')
+  }
+}
+
+export async function fetchFacilitators(){
+  try {
+    const response = await axios.get(`${BASE_URL}/api/collections/users/records?filter=(AccountType='FACILITATOR')`, {
+      headers: {
+        Authorization: `Bearer ${pb.authStore.token}`
+      }
+    })
+    return response.data
+  } catch (error) {
+    console.log(error)
+    throw new Error('Error fetching users')
   }
 }
 
