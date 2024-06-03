@@ -3,8 +3,6 @@ import { pb } from '@/app/lib/utils';
 
 export async function GET(req: NextRequest) {
   try {
-    // Clear the auth store in PocketBase
-    pb.authStore.clear();
     const response = NextResponse.json({ success: true });
 
     // Clear the auth cookie
