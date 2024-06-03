@@ -1,43 +1,77 @@
 'use client'
-import React from "react";
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell} from "@nextui-org/table";
+import React, { useEffect, useState } from "react";
+import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/table";
+import { User } from "@/types";
+
+const rows = [
+  {
+    key: "1",
+    name: "Tony Reichert",
+    role: "CEO",
+    status: "Active",
+  },
+  {
+    key: "2",
+    name: "Zoey Lang",
+    role: "Technical Lead",
+    status: "Paused",
+  },
+  {
+    key: "3",
+    name: "Jane Fisher",
+    role: "Senior Developer",
+    status: "Active",
+  },
+  {
+    key: "4",
+    name: "William Howard",
+    role: "Community Manager",
+    status: "Vacation",
+  },
+];
+
+const columns = [
+  {
+    key: "name",
+    label: "NAME",
+  },
+  {
+    key: "role",
+    label: "ROLE",
+  },
+  {
+    key: "status",
+    label: "STATUS",
+  },
+];
+
 
 export default function Users() {
+  const [users, setUsers] = useState<User[]>([])
+
+  useEffect(()=>{
+
+  }, [])
+  
   return (
     <div className="mt-10">
       <Table
+        // isStriped
         classNames={{
-          wrapper: ["bg-background"],
-          th:['border-b bg-transparent']
+          wrapper: ["bg-background border border-cultured/5 w-full min-w-[640px]"],
+          th:['bg-cultured/5 ']
         }}
-        aria-label="Example static collection table"
+        aria-label="Example dynamic collection table"
       >
-        <TableHeader>
-        <TableColumn>NAME</TableColumn>
-        <TableColumn>ROLE</TableColumn>
-        <TableColumn>STATUS</TableColumn>
+        <TableHeader columns={columns}>
+        {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
       </TableHeader>
-      <TableBody>
-        <TableRow key="1">
-          <TableCell>Tony Reichert</TableCell>
-          <TableCell>CEO</TableCell>
-          <TableCell>Active</TableCell>
-        </TableRow>
-        <TableRow key="2">
-          <TableCell>Zoey Lang</TableCell>
-          <TableCell>Technical Lead</TableCell>
-          <TableCell>Paused</TableCell>
-        </TableRow>
-        <TableRow key="3">
-          <TableCell>Jane Fisher</TableCell>
-          <TableCell>Senior Developer</TableCell>
-          <TableCell>Active</TableCell>
-        </TableRow>
-        <TableRow key="4">
-          <TableCell>William Howard</TableCell>
-          <TableCell>Community Manager</TableCell>
-          <TableCell>Vacation</TableCell>
-        </TableRow>
+      <TableBody items={rows}>
+        {(item) => (
+          <TableRow key={item.key}>
+            {(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}
+          </TableRow>
+        )}
       </TableBody>
       </Table>
     </div>
