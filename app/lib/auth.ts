@@ -13,7 +13,7 @@ export function generateUniqueToken(email:string) {
 
 export async function registerUser(user: TSignUpSchema) {
   try {
-    const record = await pb.collection('users').create(user);
+    const record = await pb.collection('users').create({...user, AccountType:"FACILITATOR"});
     return {success: true}
   } catch (error) {
     console.error('Error registering user:', error);
