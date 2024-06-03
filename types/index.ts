@@ -8,7 +8,8 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 export const SignUpSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8, "Password must be at least 8 characters."),
-  passwordConfirm: z.string()
+  passwordConfirm: z.string(),
+  accountType: z.string().default("FACILITATOR")
 }).refine(data => data.password === data.passwordConfirm, {
   message:"Passwords must match",
   path:["passwordConfirm"]
