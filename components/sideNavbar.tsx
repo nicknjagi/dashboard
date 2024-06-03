@@ -3,12 +3,15 @@
 import { Button } from "@nextui-org/button";
 import clsx from "clsx";
 import {
+  CalendarClock,
   LayoutDashboard,
+  Library,
   LucideIcon,
   PanelLeft,
   SquareKanban,
   UserCog,
   UsersRound,
+  WalletCards,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -52,6 +55,24 @@ export const links: LinkNav[] = [
     title: "Facilitators",
     href: "/facilitators",
     icon: UserCog,
+    roles: ["ADMIN"],
+  },
+  {
+    title: "Accounts",
+    href: "/accounts",
+    icon: WalletCards,
+    roles: ["ADMIN"],
+  },
+  {
+    title: "Library",
+    href: "/library",
+    icon: Library,
+    roles: ["ADMIN", "FACILITATOR"],
+  },
+  {
+    title: "Sessions",
+    href: "/sessions",
+    icon: CalendarClock,
     roles: ["ADMIN"],
   },
 ];
