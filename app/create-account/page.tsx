@@ -1,4 +1,4 @@
-import CreateAccount from "@/components/createAccount";
+import CreateAccount from "@/components/forms/createAccount";
 import { Suspense } from "react";
 
 type Props = {};
