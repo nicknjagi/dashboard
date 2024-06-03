@@ -34,7 +34,7 @@ export default function Login({}: Props) {
   };
 
   return (
-    <div className="flex h-[calc(100vh-100px)] items-center ">
+    <div className="absolute inset-0 flex w-screen h-screen items-center ">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 border-2 border-cultured/20 rounded-lg w-full max-w-lg mx-auto p-4 sm:p-8 shadow-lg"
