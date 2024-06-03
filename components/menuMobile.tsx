@@ -49,7 +49,9 @@ export default function MenuMobile({}: Props) {
               </DropdownItem>
               <DropdownItem textValue='nav links' key={'links'}>
                 <div className="flex flex-col items-start md:hidden">
-                  {links.map((link, i) => {
+                  {links
+                  .filter((link) => userModel && link.roles.includes(userModel.AccountType)) 
+                  .map((link, i) => {
                     return (
                       <div className="w-full " key={i}>
                         <Button
