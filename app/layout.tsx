@@ -34,7 +34,7 @@ export default function RootLayout({
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
 					<div className="relative flex flex-col md:flex-row min-h-screen">
 						<SideNavbar />
-						<main className="w-full">
+						<main className="w-full md:overflow-x-auto">
 							<Nav />
 							<div className="p-4 max-w-5xl mx-auto">{children}</div>
 						</main>
