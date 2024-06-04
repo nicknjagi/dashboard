@@ -89,7 +89,7 @@ export default function SideNavbar({}: Props) {
   useEffect(() => {
     const user = pb.authStore.model as User;
     setUserModel(user);
-  }, []);
+  }, [pathname]);
 
   function toggleSidebar() {
     setIsCollapsed(!isCollapsed);
