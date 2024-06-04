@@ -54,11 +54,11 @@ export default function Users() {
   }, [])
   
   return (
-    <div className="mt-10">
+    <div className="mt-6 overflow-x-auto rounded-2xl shadow-md w-fit">
       <Table
         // isStriped
         classNames={{
-          wrapper: ["bg-background border border-cultured/5 w-full min-w-[640px]"],
+          wrapper: ["bg-background border border-cultured/5 w-full min-w-[640px] max-w-fit"],
           th:['bg-cultured/5 ']
         }}
         aria-label="Example dynamic collection table"
