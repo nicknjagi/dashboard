@@ -19,9 +19,13 @@ type Props = {};
 
 const columns = [
   {
-    key: "username",
-    label: "USERNAME",
+    key: "id",
+    label: "ID",
   },
+  // {
+  //   key: "username",
+  //   label: "USERNAME",
+  // },
   {
     key: "email",
     label: "EMAIL",
@@ -46,6 +50,8 @@ export default function FacilitatorsList({}: Props) {
       try {
         const data = await fetchFacilitators();
         setUsers(data.items);
+        console.log(data.items);
+        
       } catch (error) {
         setError("Error fetching facilitators data.");
       } finally {
@@ -64,12 +70,12 @@ export default function FacilitatorsList({}: Props) {
   }
 
   return (
-    <div className="mt-6 overflow-x-auto rounded-2xl shadow-md">
+    <div className="mt-6 overflow-x-auto rounded-2xl shadow-md max-w-fit">
       <Table
         // isStriped
         classNames={{
           wrapper: [
-            "bg-background border border-cultured/10 w-full min-w-[640px]",
+            "bg-background border border-cultured/10 w-full min-w-[640px] max-w-fit",
           ],
           th: ["bg-cultured/10 "],
         }}
