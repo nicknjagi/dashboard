@@ -65,7 +65,7 @@ export default function CreateAccount({}: Props) {
   };
 
   return (
-    <div className="absolute inset-0 flex w-screen h-screen items-center ">
+    <div className="flex w-full h-[calc(100vh-60px)] justify-center items-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 border-2 border-cultured/20 rounded-lg w-full max-w-lg mx-auto px-4 py-6 sm:p-8 shadow-lg"
