@@ -22,7 +22,7 @@ export default function Nav({}:Props) {
       const { model} = JSON.parse(storedAuthData);
       setUserModel(model as User);
     }
-  }, [router]);
+  }, [router, pathname]);
 
   const handleLogout = async () => {
     try {
