@@ -10,25 +10,22 @@ import {
   TableCell,
   getKeyValue,
 } from "@nextui-org/table";
-import { User } from "@/types";
+import { User as TUser} from "@/types";
 import { fetchFacilitators } from "@/app/lib/utils";
 import { BadgeCheck } from "lucide-react";
 import Loading from "./loading";
-
+import { Avatar } from "@nextui-org/avatar";
+import {User} from "@nextui-org/user";
 type Props = {};
 
 const columns = [
-  {
-    key: "id",
-    label: "ID",
-  },
   // {
   //   key: "username",
   //   label: "USERNAME",
   // },
   {
-    key: "email",
-    label: "EMAIL",
+    key: "name",
+    label: "NAME",
   },
   {
     key: "verified",
@@ -41,7 +38,7 @@ const columns = [
 ];
 
 export default function FacilitatorsList({}: Props) {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<TUser[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -99,6 +96,17 @@ export default function FacilitatorsList({}: Props) {
                     ) : (
                       <span className="block text-center lg:text-start">-</span>
                     )
+                  ) : columnKey === "name" ? (
+                    <User
+                      avatarProps={{
+                        radius: "lg",
+                        src: `${process.env.NEXT_PUBLIC_BASE_URL}/api/files/users/${item.id}/${item?.avatar}`,
+                      }}
+                      description={item.email}
+                      name={item.name}
+                    >
+                      {item.email}
+                    </User>
                   ) : (
                     getKeyValue(item, columnKey)
                   )}
