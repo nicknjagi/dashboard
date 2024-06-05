@@ -7,13 +7,13 @@ import { pb } from './utils';
 export function generateUniqueToken(email:string) {
   const userId = uuidv4()
   const { JWT_SECRET } = process.env  
-  const token = jwt.sign({ userId, email }, JWT_SECRET as string, { expiresIn: '1h' }); 
+  const token = jwt.sign({ userId, email }, JWT_SECRET as string, { expiresIn: '30min' }); 
   return token;
 }
 
-export async function registerUser(user: TSignUpSchema) {
+export async function registerUser(user: FormData) {  
   try {
-    const record = await pb.collection('users').create({...user, AccountType:"FACILITATOR",emailVisibility: true,});
+    const record = await pb.collection('users').create({...Object.fromEntries(user.entries()), AccountType:"FACILITATOR",emailVisibility: true,});
     return {success: true}
   } catch (error) {
     console.error('Error registering user:', error);
