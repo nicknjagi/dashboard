@@ -55,15 +55,14 @@ export default function Nav({}: Props) {
           >
             <DropdownTrigger>
               <Avatar
-                isBordered
                 as="button"
-                className="transition-transform bg-cultured"
-                name="Jason Hughes"
-                size="sm"
+                className="transition-transform "
+                name={userModel?.name}
+                size="md"
                 src={
                   userModel?.avatar
                     ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/files/users/${userModel.id}/${userModel?.avatar}`
-                    : "/circle-user-round.svg"
+                    : ""
                 }
               />
             </DropdownTrigger>
