@@ -12,8 +12,9 @@ export function generateUniqueToken(email:string) {
 }
 
 export async function registerUser(user: FormData) {  
+  const userObj = Object.fromEntries(user.entries())
   try {
-    const record = await pb.collection('users').create({...Object.fromEntries(user.entries()), AccountType:"FACILITATOR",emailVisibility: true,});
+    const record = await pb.collection('users').create({...userObj, name:`${userObj.firstName} ${userObj.lastName}`,AccountType:"FACILITATOR",emailVisibility: true,});
     return {success: true}
   } catch (error) {
     console.error('Error registering user:', error);
