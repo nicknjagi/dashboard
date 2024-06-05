@@ -6,10 +6,13 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
 export const SignUpSchema = z.object({
+  firstName: z.string().min(2, "First name is required"),
+  lastName: z.string().min(2, "Last name is required"),
   email: z.string().email(),
-  password: z.string().min(8, "Password must be at least 8 characters."),
+  password: z.string().min(8, "Password must be at least 8 characters"),
   passwordConfirm: z.string(),
-  accountType: z.string().default("FACILITATOR")
+  accountType: z.string().default("FACILITATOR"),
+  avatar: z.optional(z.any())
 }).refine(data => data.password === data.passwordConfirm, {
   message:"Passwords must match",
   path:["passwordConfirm"]
