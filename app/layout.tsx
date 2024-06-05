@@ -38,7 +38,7 @@ export default function RootLayout({
 							<Nav />
 							<div className="p-4 md:px-6 lg:px-8 max-w-5xl mx-auto">{children}</div>
 						</main>
-						<Toaster position="top-right" />
+						<Toaster position="top-right" toastOptions={{duration:2000}}/>
 					</div>
 				</Providers>
 			</body>
