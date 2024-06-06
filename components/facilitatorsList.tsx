@@ -14,7 +14,6 @@ import { User as TUser} from "@/types";
 import { fetchFacilitators } from "@/app/lib/utils";
 import { BadgeCheck } from "lucide-react";
 import Loading from "./loading";
-import { Avatar } from "@nextui-org/avatar";
 import {User} from "@nextui-org/user";
 type Props = {};
 
@@ -47,8 +46,7 @@ export default function FacilitatorsList({}: Props) {
       try {
         const data = await fetchFacilitators();
         setUsers(data.items);
-        console.log(data.items);
-        
+        // console.log(data.items);
       } catch (error) {
         setError("Error fetching facilitators data.");
       } finally {
@@ -100,7 +98,7 @@ export default function FacilitatorsList({}: Props) {
                     <User
                       avatarProps={{
                         radius: "lg",
-                        src: `${process.env.NEXT_PUBLIC_BASE_URL}/api/files/users/${item.id}/${item?.avatar}`,
+                        src: item?.avatar ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/files/users/${item.id}/${item?.avatar}` : "/user-round.svg",
                       }}
                       description={item.email}
                       name={item.name}
