@@ -1,5 +1,5 @@
 
-import { Workspace, User } from "@/types";
+import { Workspace, User, TWorkspaceSchema } from "@/types";
 import { BASE_URL, pb } from "./utils";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -34,9 +34,9 @@ export async function getWorkspaces() {
   }
 }
 
-export async function createWorkspace(data: Workspace) {
+export async function createWorkspace(data: TWorkspaceSchema): Promise<any> {
   const user = pb.authStore.model as User
-
+  
   if (user.AccountType !== 'ADMIN') {
     toast.error('Not authorized')
     return
@@ -44,7 +44,7 @@ export async function createWorkspace(data: Workspace) {
 
   try {
     const url = `${BASE_URL}/api/collections/workspaces/records`
-    const response = await axios.patch(url, data, {
+    const response = await axios.post(url, data, {
       headers: {
         Authorization: `Bearer ${pb.authStore.token}`
       }
@@ -55,6 +55,7 @@ export async function createWorkspace(data: Workspace) {
     throw new Error('Error creating workspace')
   }
 }
+
 export async function updateWorkspace(data: Workspace) {
   const user = pb.authStore.model as User
 
