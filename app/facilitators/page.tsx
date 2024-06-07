@@ -7,7 +7,7 @@ export default function Facilitators({}: Props) {
   return (
     <section className="py-4">
       <div className="flex justify-between items-center">
-        <h1 className={"text-xl md:text-3xl font-medium"}>Facilitators</h1>
+        <h1 className={"text-xl md:text-2xl font-medium"}>Facilitators</h1>
         <SendTokenModal />
       </div>
       <FacilitatorsList />
