@@ -16,7 +16,7 @@ export async function getSessions(){
   }
 }
 
-export async function createWorkspace(workspaceId:string, data: Session) {
+export async function createSession(workspaceId:string, data: Session) {
   const user = pb.authStore.model as User
   const workspace = await getWorkspace(workspaceId) as Workspace
 
@@ -38,7 +38,7 @@ export async function createWorkspace(workspaceId:string, data: Session) {
     throw new Error('Error creating session')
   }
 }
-export async function updateWorkspace(workspaceId:string, data: Session) {
+export async function updateSession(workspaceId:string, data: Session) {
   const user = pb.authStore.model as User
   const workspace = await getWorkspace(workspaceId) as Workspace
 
