@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -10,18 +9,16 @@ import {
   TableCell,
   getKeyValue,
 } from "@nextui-org/table";
-import { User as TUser} from "@/types";
+import { User as TUser } from "@/types";
 import { fetchFacilitators } from "@/app/lib/facilitators";
 import { BadgeCheck } from "lucide-react";
 import Loading from "./loading";
-import {User} from "@nextui-org/user";
+import { User } from "@nextui-org/user";
+import { useQuery } from "@tanstack/react-query";
+
 type Props = {};
 
 const columns = [
-  // {
-  //   key: "username",
-  //   label: "USERNAME",
-  // },
   {
     key: "name",
     label: "NAME",
@@ -37,31 +34,17 @@ const columns = [
 ];
 
 export default function FacilitatorsList({}: Props) {
-  const [users, setUsers] = useState<TUser[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function getUsers() {
-      try {
-        const data = await fetchFacilitators();
-        setUsers(data.items);
-        // console.log(data.items);
-      } catch (error) {
-        setError("Error fetching facilitators data.");
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    getUsers();
-  }, []);
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["facilitators"],
+    queryFn: fetchFacilitators,
+  });
 
   if (isLoading) {
     return <Loading />;
   }
 
   if (error) {
-    return <p className="mt-10">{error}</p>;
+    return <p className="mt-10">Error fetching facilitators</p>;
   }
 
   return (
@@ -81,38 +64,46 @@ export default function FacilitatorsList({}: Props) {
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody items={users}>
-          {(item) => (
-            <TableRow key={item.username}>
-              {(columnKey) => (
-                <TableCell>
-                  {columnKey === "verified" ? (
-                    item.verified ? (
-                      <span className="flex justify-center lg:justify-start">
-                        <BadgeCheck color="#48b446" />
-                      </span>
+        {data.items.length > 0 ? (
+          <TableBody items={data.items}>
+            {(facilitator: TUser) => (
+              <TableRow key={facilitator.username}>
+                {(columnKey) => (
+                  <TableCell>
+                    {columnKey === "verified" ? (
+                      facilitator.verified ? (
+                        <span className="flex justify-center lg:justify-start">
+                          <BadgeCheck color="#48b446" />
+                        </span>
+                      ) : (
+                        <span className="block text-center lg:text-start">
+                          -
+                        </span>
+                      )
+                    ) : columnKey === "name" ? (
+                      <User
+                        avatarProps={{
+                          radius: "lg",
+                          src: facilitator?.avatar
+                            ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/files/users/${facilitator.id}/${facilitator?.avatar}`
+                            : "/user-round.svg",
+                        }}
+                        description={facilitator.email}
+                        name={facilitator.name}
+                      >
+                        {facilitator.email}
+                      </User>
                     ) : (
-                      <span className="block text-center lg:text-start">-</span>
-                    )
-                  ) : columnKey === "name" ? (
-                    <User
-                      avatarProps={{
-                        radius: "lg",
-                        src: item?.avatar ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/files/users/${item.id}/${item?.avatar}` : "/user-round.svg",
-                      }}
-                      description={item.email}
-                      name={item.name}
-                    >
-                      {item.email}
-                    </User>
-                  ) : (
-                    getKeyValue(item, columnKey)
-                  )}
-                </TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
+                      getKeyValue(facilitator, columnKey)
+                    )}
+                  </TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        ) : (
+          <TableBody emptyContent={"No rows to display."}>{[]}</TableBody>
+        )}
       </Table>
     </div>
   );
