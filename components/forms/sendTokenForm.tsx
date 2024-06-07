@@ -9,7 +9,7 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import toast from "react-hot-toast";
 
 type Props = {
-  onClose: any;
+  onClose: () => void;
 };
 
 const EmailSchema = z.object({
