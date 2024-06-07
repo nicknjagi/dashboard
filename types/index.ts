@@ -5,6 +5,7 @@ import { z } from "zod";
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
+
 export const SignUpSchema = z.object({
   firstName: z.string().min(2, "First name is required"),
   lastName: z.string().min(2, "Last name is required"),
@@ -73,6 +74,13 @@ export type LibraryItem = {
   thumbnail: string;
   content: string; // Assuming this is rich text format
 };
+
+export const WorkspaceSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  active: z.boolean().default(true)
+})
+
+export type TWorkspaceSchema = z.infer<typeof WorkspaceSchema>
 
 export type Workspace = {
   id: string;
