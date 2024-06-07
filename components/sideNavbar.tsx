@@ -201,7 +201,7 @@ export default function SideNavbar({}: Props) {
               variant="light"
               onClick={toggleSidebar}
               className={clsx(
-                "flex md:justify-start gap-3 hover:bg-cultured/60 text-neutral-400 hover:text-cultured w-full min-w-6",
+                "flex md:justify-start gap-3 rounded-lg hover:bg-cultured/60 text-neutral-400 hover:text-cultured w-full min-w-6",
                 { "md:justify-center": isCollapsed }
               )}
             >
