@@ -11,7 +11,7 @@ import {
   getKeyValue,
 } from "@nextui-org/table";
 import { User as TUser} from "@/types";
-import { fetchFacilitators } from "@/app/lib/utils";
+import { fetchFacilitators } from "@/app/lib/facilitators";
 import { BadgeCheck } from "lucide-react";
 import Loading from "./loading";
 import {User} from "@nextui-org/user";
@@ -61,7 +61,7 @@ export default function FacilitatorsList({}: Props) {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p className="mt-10">{error}</p>;
   }
 
   return (
