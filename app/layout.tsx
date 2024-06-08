@@ -36,7 +36,7 @@ export default function RootLayout({
 						<SideNavbar />
 						<main className="w-full md:overflow-x-auto">
 							<Nav />
-							<div className="p-4 md:px-6 lg:px-8 max-w-5xl mx-auto">{children}</div>
+							<div className="p-4 md:px-6 lg:px-8 max-w-7xl mx-auto">{children}</div>
 						</main>
 						<Toaster position="top-right" toastOptions={{duration:2000}}/>
 					</div>
