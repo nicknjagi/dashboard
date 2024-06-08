@@ -56,7 +56,7 @@ export async function createWorkspace(data: TWorkspaceSchema): Promise<any> {
   }
 }
 
-export async function updateWorkspace(data: Workspace) {
+export async function updateWorkspace(data: Workspace): Promise<any> {
   const user = pb.authStore.model as User
 
   if (user.AccountType !== 'ADMIN') {
@@ -75,5 +75,20 @@ export async function updateWorkspace(data: Workspace) {
   } catch (error) {
     console.error('Error updating account:', error);
     throw new Error('Error updating account')
+  }
+}
+
+export async function deleteWorkspace(id: string) {
+  try {
+    const url = `${BASE_URL}/api/collections/workspaces/records/${id}`
+    const response = await axios.delete(url, {
+      headers: {
+        Authorization: `Bearer ${pb.authStore.token}`
+      }
+    })
+    return { success: true }
+  } catch (error) {
+    console.error('Error deleting workspace:', error);
+    throw new Error('Error deleting workspace')
   }
 }
