@@ -5,10 +5,13 @@ import { Button } from "@nextui-org/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
-import { TWorkspaceSchema, WorkspaceSchema } from "@/types";
+import { TWorkspaceSchema, User, WorkspaceSchema } from "@/types";
 import { Checkbox } from "@nextui-org/checkbox";
 import { createWorkspace } from "@/app/lib/workspaces";
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {Select, SelectItem} from "@nextui-org/select";
+import Loading from "../loading";
+import { fetchFacilitators } from "@/app/lib/facilitators";
 
 type Props = {
   onClose: () => void;
@@ -24,6 +27,10 @@ const CreateWorkspaceForm: React.FC<Props> = ({ onClose }) => {
     resolver: zodResolver(WorkspaceSchema),
   });
   const queryClient = useQueryClient();
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["facilitators"],
+    queryFn: fetchFacilitators,
+  });
 
   const mutation = useMutation({
     mutationFn: createWorkspace,
@@ -43,6 +50,10 @@ const CreateWorkspaceForm: React.FC<Props> = ({ onClose }) => {
     mutation.mutate(data);
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input
@@ -54,6 +65,19 @@ const CreateWorkspaceForm: React.FC<Props> = ({ onClose }) => {
       {errors.name && (
         <small className="mt-1 ml-1 text-red-500">{`${errors.name.message}`}</small>
       )}
+
+      <Select
+        {...register("facilitator")}
+        items={data.items}
+        label="Facilitator"
+        className="block max-w-[160px]"
+        classNames={{ popoverContent: ["bg-background"] }}
+        variant="underlined"
+      >
+        {(facilitator: User) => (
+          <SelectItem key={facilitator.id}>{facilitator.name}</SelectItem>
+        )}
+      </Select>
 
       <Checkbox
         {...register("active")}
