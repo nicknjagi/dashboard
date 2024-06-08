@@ -77,7 +77,8 @@ export type LibraryItem = {
 
 export const WorkspaceSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  active: z.boolean().default(true)
+  active: z.boolean().default(true),
+  facilitator: z.string()
 })
 
 export type TWorkspaceSchema = z.infer<typeof WorkspaceSchema>
