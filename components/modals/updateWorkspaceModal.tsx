@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
 import {
   Modal,
   ModalContent,
@@ -10,23 +9,26 @@ import {
 } from "@nextui-org/modal";
 import UpdateWorkspaceForm from "../forms/updateWorkspaceForm";
 import { Workspace } from "@/types";
+import { Pencil } from "lucide-react";
+import { Button } from "@nextui-org/button";
 
 type Props = {
   workspace: Workspace;
-}
+};
 
-export default function UpdateWorkspaceModal({workspace}: Props) {
+export default function UpdateWorkspaceModal({ workspace }: Props) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <>
       <Button
         size="sm"
-        onPress={onOpen}
-        // className="bg-cultured text-forrestGreen hover:bg-opacity-90 font-medium"
-        variant="light"
+        onClick={onOpen}
+        variant="flat"
+        className="bg-cultured text-forrestGreen font-semibold"
       >
-        update
+        <Pencil size={16} />
+        <span>Edit</span>
       </Button>
       <Modal
         className="bg-forrestGreen"
@@ -43,12 +45,12 @@ export default function UpdateWorkspaceModal({workspace}: Props) {
                 Update Workspace
               </ModalHeader>
               <ModalBody>
-                <UpdateWorkspaceForm onClose={onClose} workspace={workspace}/>
+                <UpdateWorkspaceForm onClose={onClose} workspace={workspace} />
               </ModalBody>
             </>
           )}
         </ModalContent>
       </Modal>
     </>
-  )
+  );
 }
