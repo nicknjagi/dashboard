@@ -68,13 +68,7 @@ export const links: LinkNav[] = [
     href: "/library",
     icon: Library,
     roles: ["ADMIN", "FACILITATOR"],
-  },
-  {
-    title: "Sessions",
-    href: "/sessions",
-    icon: CalendarClock,
-    roles: ["ADMIN"],
-  },
+  }
 ];
 
 export const hideRoutes: string[] = ["/create-account", "/login"];
