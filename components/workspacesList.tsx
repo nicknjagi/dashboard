@@ -16,6 +16,7 @@ import {
 } from "@nextui-org/table";
 import { Button } from "@nextui-org/button";
 import {Chip} from "@nextui-org/chip";
+import UpdateWorkspaceModal from "./modals/updateWorkspaceModal";
 
 const columns = [
   {
@@ -75,9 +76,7 @@ export default function WorkspacesList({}: Props) {
                 {(columnKey) => (
                   <TableCell>
                     {columnKey === "actions" ? (
-                      <Button size="sm" variant="light" className="">
-                        update
-                      </Button>
+                      <UpdateWorkspaceModal workspace={workspace}/>
                     ) : columnKey === "status" ? (
                       workspace.active ? (
                         <Chip color="success" size="sm">Active</Chip>
