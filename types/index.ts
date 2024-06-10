@@ -95,6 +95,16 @@ export type Workspace = {
   facilitator: string; // Single relation record ID
 };
 
+export const SessionSchema = z.object({
+  date: z.string().min(1, "Date is required"),
+  workspace: z.string().min(1, "Workspace is required"),
+  type: z.string().min(1, "Type is required"),
+  link_to_session: z.string().min(1, "Link to session is required"),
+  duration_in_hours: z.coerce.number().min(1, "Duration must be at least 1 hour")
+});
+
+export type TSessionSchema = z.infer<typeof SessionSchema>
+
 export type Session = {
   id: string;
   collectionId: string;
