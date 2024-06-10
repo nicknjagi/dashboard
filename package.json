@@ -15,6 +15,7 @@
 		"@nextui-org/button": "^2.0.31",
 		"@nextui-org/checkbox": "^2.1.1",
 		"@nextui-org/chip": "^2.0.29",
+		"@nextui-org/date-picker": "^2.1.1",
 		"@nextui-org/dropdown": "^2.1.23",
 		"@nextui-org/input": "^2.2.1",
 		"@nextui-org/listbox": "^2.1.19",
@@ -44,6 +45,7 @@
 		"intl-messageformat": "^10.5.0",
 		"jsonwebtoken": "^9.0.2",
 		"lucide-react": "^0.379.0",
+		"luxon": "^3.4.4",
 		"next": "^14.2.3",
 		"next-themes": "^0.2.1",
 		"nodemailer": "^6.9.13",
@@ -61,6 +63,7 @@
 	},
 	"devDependencies": {
 		"@types/jsonwebtoken": "^9.0.6",
+		"@types/luxon": "^3.4.2",
 		"@types/react": "^18.3.2",
 		"@types/react-dom": "^18.3.0",
 		"@types/uuid": "^9.0.8"
