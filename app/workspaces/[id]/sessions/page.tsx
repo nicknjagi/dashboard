@@ -6,7 +6,7 @@ type Props = {};
 export default function Sessions({}: Props) {
 
   return (
-    <div>
+    <div className="py-2">
       <div className="flex justify-between items-center">
         <h1 className={"text-xl md:text-2xl font-medium"}>Sessions</h1>
         <CreateSessionModal />
