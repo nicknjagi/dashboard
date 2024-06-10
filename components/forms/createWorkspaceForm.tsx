@@ -83,7 +83,6 @@ const CreateWorkspaceForm: React.FC<Props> = ({ onClose }) => {
         {...register("active")}
         size="sm"
         className="block mt-2"
-        defaultSelected
       >
         Active
       </Checkbox>
