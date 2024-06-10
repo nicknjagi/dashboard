@@ -27,7 +27,9 @@ export default function UpdateWorkspaceModal({ workspace }: Props) {
         variant="flat"
         className="bg-cultured text-forrestGreen font-semibold"
       >
-        <Pencil size={16} />
+        <span className="border-b border-forrestGreen">
+          <Pencil size={15} />
+        </span>
         <span>Edit</span>
       </Button>
       <Modal
