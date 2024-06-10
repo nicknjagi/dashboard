@@ -3,7 +3,6 @@
 import { Button } from "@nextui-org/button";
 import clsx from "clsx";
 import {
-  CalendarClock,
   LayoutDashboard,
   Library,
   LucideIcon,
@@ -82,7 +81,7 @@ export default function SideNavbar({}: Props) {
 
   useEffect(() => {
     const user = pb.authStore.model as User;
-    setUserModel(user);
+    setUserModel(user);    
   }, [pathname]);
 
   function toggleSidebar() {
@@ -96,7 +95,7 @@ export default function SideNavbar({}: Props) {
   return (
     <nav
       className={clsx(
-        `flex md:flex-col justify-between md:justify-normal p-4 w-full transition-all duration-200 ease-out origin-left ${
+        `flex md:flex-col justify-between md:justify-normal p-4 w-full transition-all duration-200 ease-soft-spring origin-left ${
           isCollapsed ? "md:w-fit" : " md:px-6 md:w-full"
         } md:max-w-[280px] border-b md:border-r border-gold/50 relative`
       )}
