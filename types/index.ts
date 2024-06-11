@@ -61,13 +61,18 @@ export type Account = {
   sub_code: string;
 };
 
+export const AccountSchema = z.object({
+  subscription_type: z.string().min(1, "Subscription type is required"),
+  active: z.boolean().default(false),
+})
+
 export type LibraryItem = {
   id: string;
   collectionId: string;
   collectionName: string;
   created: string; // ISO 8601 date string
   updated: string; // ISO 8601 date string
-  Name: string;
+  name: string;
   description: string;
   link: string;
   type: 'VIDEO' | 'MUSIC'| 'FILE'
