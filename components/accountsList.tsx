@@ -45,7 +45,7 @@ const columns = [
 
 export default function AccountsList({}: Props) {
   const [page, setPage] = useState(1);
-  const [perPage] = useState(1);
+  const [perPage] = useState(10);
 
   const { data, error, isLoading } = useQuery({
     queryKey: ["accounts", page],
