@@ -11,11 +11,13 @@ import {
 } from "@nextui-org/table";
 import { Account } from "@/types";
 import Loading from "./loading";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getAccounts } from "@/app/lib/accounts";
 import { Chip } from "@nextui-org/chip";
 import { DateTime } from "luxon";
 import UpdateAccountModal from "./modals/updateAccountModal";
+import { Pagination } from "@nextui-org/pagination";
+import { useState } from "react";
 
 type Props = {};
 
@@ -42,9 +44,13 @@ const columns = [
 ];
 
 export default function AccountsList({}: Props) {
+  const [page, setPage] = useState(1);
+  const [perPage] = useState(1);
+
   const { data, error, isLoading } = useQuery({
-    queryKey: ["accounts"],
-    queryFn: getAccounts,
+    queryKey: ["accounts", page],
+    queryFn: () => getAccounts(page, perPage),
+    placeholderData: keepPreviousData,
   });
 
   if (isLoading) {
@@ -58,7 +64,21 @@ export default function AccountsList({}: Props) {
   return (
     <div className="mt-6 overflow-x-auto rounded-2xl shadow-md max-w-fit">
       <Table
-        // isStriped
+        bottomContent={
+          <div className="flex w-full justify-center">
+            <Pagination
+              isCompact
+              showControls
+              showShadow
+              page={page}
+              total={data.totalPages}
+              onChange={setPage}
+              classNames={{
+                cursor:"bg-cultured/20 shadow-cultured/10 text-white font-bold"
+              }}
+            />
+          </div>
+        }
         classNames={{
           wrapper: [
             "bg-background border border-cultured/10 w-full min-w-[700px] max-w-fit",
