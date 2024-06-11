@@ -19,9 +19,15 @@ export async function getAccount(id: string) {
   }
 }
 
-export async function getAccounts() {
+export async function getAccounts(page: number = 1, perPage: number = 10) {
+  const user = pb.authStore.model as User
+
+  if (user.AccountType !== 'ADMIN') {
+    toast.error('Not authorized')
+    return
+  }
   try {
-    const url = `${BASE_URL}/api/collections/accounts/records?sort=-created`
+    const url = `${BASE_URL}/api/collections/accounts/records?sort=-created&page=${page}&perPage=${perPage}`
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${pb.authStore.token}`
