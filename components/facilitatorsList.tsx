@@ -15,6 +15,7 @@ import { BadgeCheck } from "lucide-react";
 import Loading from "./loading";
 import { User } from "@nextui-org/user";
 import { useQuery } from "@tanstack/react-query";
+import { DateTime } from "luxon";
 
 type Props = {};
 
@@ -93,6 +94,8 @@ export default function FacilitatorsList({}: Props) {
                       >
                         {facilitator.email}
                       </User>
+                    ) : columnKey === "created" ? (
+                      <span>{DateTime.fromISO(facilitator.created.replace(" ", "T"), { zone: 'utc' }).toFormat("dd/MM/yyyy hh:mm a")}</span>
                     ) : (
                       getKeyValue(facilitator, columnKey)
                     )}
