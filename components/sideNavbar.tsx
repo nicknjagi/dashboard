@@ -154,7 +154,7 @@ export default function SideNavbar({}: Props) {
                       "flex md:justify-start gap-3 min-w-6 rounded-lg",
                       {
                         "bg-cultured data-[hover=true]:bg-cultured text-forrestGreen cursor-default":
-                          pathname === link.href,
+                          pathname === link.href || (pathname.includes('/session') && link.title === 'Workspaces'),
                         "max-w-fit": isCollapsed,
                       }
                     )}
