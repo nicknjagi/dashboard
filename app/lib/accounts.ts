@@ -19,6 +19,21 @@ export async function getAccount(id: string) {
   }
 }
 
+export async function getAccounts() {
+  try {
+    const url = `${BASE_URL}/api/collections/accounts/records?sort=-created`
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${pb.authStore.token}`
+      }
+    })
+    return response.data
+  } catch (error) {
+    console.error('Error fetching account:', error);
+    throw new Error('Error fetching account')
+  }
+}
+
 export async function updateAccount(data: Account) {
   const user = pb.authStore.model as User
 
