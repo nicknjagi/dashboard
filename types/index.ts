@@ -66,6 +66,17 @@ export const AccountSchema = z.object({
   active: z.boolean().default(false),
 })
 
+export const LibrarySchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  description: z.string(),
+  type: z.string().min(1, "Type is required"),
+  link: z.string(),
+  thumbnail: z.string(),
+  content: z.string()
+})
+
+export type TLibrarySchema = z.infer<typeof LibrarySchema>
+
 export type LibraryItem = {
   id: string;
   collectionId: string;
