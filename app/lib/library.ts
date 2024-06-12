@@ -1,9 +1,9 @@
 
-import { LibraryItem } from "@/types";
+import { LibraryItem, TLibrarySchema } from "@/types";
 import { BASE_URL, pb } from "./utils";
 import axios from "axios";
 
-export async function getLibraries() {
+export async function getLibraryItems() {
   try {
     const url = `${BASE_URL}/api/collections/library/records?sort=-created`
     const response = await axios.get(url, {
@@ -18,7 +18,7 @@ export async function getLibraries() {
   }
 }
 
-export async function createLibrary(data: LibraryItem) {
+export async function createLibraryItem(data: TLibrarySchema) {
   try {
     const url = `${BASE_URL}/api/collections/library/records`
     const response = await axios.post(url, data, {
@@ -33,7 +33,7 @@ export async function createLibrary(data: LibraryItem) {
   }
 }
 
-export async function updateLibrary(data: LibraryItem) {
+export async function updateLibraryItem(data: LibraryItem) {
   try {
     const url = `${BASE_URL}/api/collections/library/records/${data.id}`
     const response = await axios.patch(url, data, {
@@ -48,7 +48,7 @@ export async function updateLibrary(data: LibraryItem) {
   }
 }
 
-export async function deleteLibrary(id: string) {
+export async function deleteLibraryItem(id: string) {
   try {
     const url = `${BASE_URL}/api/collections/library/records/${id}`
     const response = await axios.delete(url, {
