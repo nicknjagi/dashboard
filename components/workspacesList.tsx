@@ -35,11 +35,11 @@ export default function WorkspacesList({}: Props) {
         return (
           <div
             key={workspace.id}
-            className="pt-4 md:pt-6 w-full md:max-w-sm border shadow border-cultured/20 rounded-lg"
+            className="pt-4 w-full md:max-w-sm border shadow border-cultured/20 rounded-lg"
           >
-            <h2 className="mb-6 text-xl px-4 md:px-6">{workspace.name}</h2>
+            <h2 className="mb-6 text-xl px-4">{workspace.name}</h2>
 
-            <div className="flex justify-between px-4 md:px-6 mb-4">
+            <div className="flex justify-between px-4 mb-4">
               <div className="flex gap-1 items-center">
                 <UsersRound size={18} />
                 <span className="text-sm">
@@ -55,7 +55,7 @@ export default function WorkspacesList({}: Props) {
               )}
             </div>
 
-            <div className="flex justify-between px-4 md:px-6 py-4 border-t border-cultured/20">
+            <div className="flex justify-between px-4 py-4 border-t border-cultured/20">
               {userModel?.AccountType === 'ADMIN' && <div className="flex gap-2">
                 <UpdateWorkspaceModal workspace={workspace} />
                 <DeleteWorkspaceModal workspace={workspace} />
