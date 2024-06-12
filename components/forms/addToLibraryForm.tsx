@@ -59,7 +59,6 @@ const AddToLibraryForm: React.FC<Props> = ({ onClose }) => {
       <div>
         <Input
           {...register("name")}
-          isRequired
           type="text"
           variant={"bordered"}
           classNames={{

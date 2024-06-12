@@ -67,7 +67,6 @@ const UpdateLibraryItemForm: React.FC<Props> = ({ libraryItem, onClose }) => {
       <div>
         <Input
           {...register("name")}
-          isRequired
           type="text"
           variant={"bordered"}
           classNames={{

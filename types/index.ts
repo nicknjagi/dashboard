@@ -67,9 +67,9 @@ export const AccountSchema = z.object({
 })
 
 export const LibrarySchema = z.object({
-  name: z.string().min(1, "Name is required"),
+  name: z.string(),
   description: z.string(),
-  type: z.string().min(1, "Type is required"),
+  type: z.string(),
   link: z.string(),
   thumbnail: z.string(),
   content: z.string()

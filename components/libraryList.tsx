@@ -36,7 +36,7 @@ export default function LibraryList({}: Props) {
               </h2>
             </div>
             <p>{library.description}</p>
-            <p>{library.content}</p>
+            {/* <p>{library.content}</p> */}
 
             <div className="flex gap-2 mt-4">
               <UpdateLibraryItemModal libraryItem={library}/>
