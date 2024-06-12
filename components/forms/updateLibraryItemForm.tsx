@@ -35,7 +35,7 @@ const UpdateLibraryItemForm: React.FC<Props> = ({ libraryItem, onClose }) => {
     mutationFn: updateLibraryItem,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["libraries"] }); // Invalidate and refetch
-      toast.success("Added to library successfully");
+      toast.success("Changes have been saved");
       reset();
       onClose();
     },
