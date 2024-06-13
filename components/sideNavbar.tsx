@@ -73,7 +73,7 @@ export const links: LinkNav[] = [
 export const hideRoutes: string[] = ["/create-account", "/login"];
 
 export default function SideNavbar({}: Props) {
-  const [isCollapsed, setIsCollapsed] = useState(false);  
+  const [isCollapsed, setIsCollapsed] = useState(true);  
   const [userModel, setUserModel] = useState<User | null>(null);
   const pathname = usePathname();
   const width = useWindowWidth();
@@ -95,7 +95,7 @@ export default function SideNavbar({}: Props) {
   return (
     <nav
       className={clsx(
-        `flex md:flex-col justify-between md:justify-normal p-4 w-full transition-all duration-200 ease-soft-spring origin-left ${
+        `flex md:flex-col justify-between md:justify-normal p-4 w-full transition-all duration-200 ease-soft-spring origin-left bg-forrestGreen md:h-screen overflow-y-auto ${
           isCollapsed ? "md:w-fit" : " md:px-6 md:w-full"
         } md:max-w-[280px] border-b md:border-r border-gold/50 relative`
       )}
@@ -173,7 +173,7 @@ export default function SideNavbar({}: Props) {
               </li>
             );
           })}
-        <li className="hidden md:block mt-10">
+        <li className="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2 w-[80%] mx-auto mt-10">
           <Tooltip
             content={"Show Sidebar"}
             classNames={{
