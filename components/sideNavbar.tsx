@@ -73,7 +73,7 @@ export const links: LinkNav[] = [
 export const hideRoutes: string[] = ["/create-account", "/login"];
 
 export default function SideNavbar({}: Props) {
-  const [isCollapsed, setIsCollapsed] = useState(true);  
+  const [isCollapsed, setIsCollapsed] = useState(false);  
   const [userModel, setUserModel] = useState<User | null>(null);
   const pathname = usePathname();
   const width = useWindowWidth();
