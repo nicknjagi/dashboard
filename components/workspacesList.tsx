@@ -35,7 +35,7 @@ export default function WorkspacesList({}: Props) {
         return (
           <div
             key={workspace.id}
-            className="pt-4 w-full md:max-w-sm border shadow border-cultured/20 rounded-lg"
+            className="pt-4 w-full md:max-w-sm border shadow bg-forrestGreen border-cultured/20 rounded-xl"
           >
             <h2 className="mb-6 text-xl px-4">{workspace.name}</h2>
 
