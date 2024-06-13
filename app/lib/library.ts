@@ -3,9 +3,9 @@ import { LibraryItem, TLibrarySchema } from "@/types";
 import { BASE_URL, pb } from "./utils";
 import axios from "axios";
 
-export async function getLibraryItems() {
+export async function getLibraryItems(type: string) {
   try {
-    const url = `${BASE_URL}/api/collections/library/records?sort=-created`
+    const url = `${BASE_URL}/api/collections/library/records?sort=-created&filter=(type="${type}")`
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${pb.authStore.token}`
