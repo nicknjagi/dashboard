@@ -48,7 +48,7 @@ export default function SessionsList({}: Props) {
         return (
           <div
             key={session.id}
-            className="p-4 w-full md:max-w-sm border shadow border-cultured/20 rounded-lg"
+            className="p-4 w-full md:max-w-sm border shadow bg-forrestGreen border-cultured/20 rounded-xl"
           >
             <div className="flex gap-4 justify-between">
               <h2 className="mb-6 text-xl capitalize">
