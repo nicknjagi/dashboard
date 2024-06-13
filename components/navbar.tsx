@@ -43,8 +43,10 @@ export default function Nav({}: Props) {
   }
 
   return (
-    <div className="border-b border-gold/50 hidden md:block">
-      <Navbar>
+    <div className="border-b border-gold/50 hidden md:block mx-auto">
+      <Navbar classNames={{
+        wrapper:"max-w-7xl"
+      }}>
         <NavbarContent as="div" justify="end">
           <Dropdown
             classNames={{
