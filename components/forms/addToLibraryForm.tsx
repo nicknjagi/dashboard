@@ -15,6 +15,12 @@ type Props = {
   onClose: () => void;
 };
 
+export const mediaTypes = [
+  { key: "VIDEO", label: "VIDEO" },
+  { key: "MUSIC", label: "MUSIC" },
+  { key: "FILE", label: "FILE" },
+];
+
 const AddToLibraryForm: React.FC<Props> = ({ onClose }) => {
   const {
     register,
@@ -40,12 +46,6 @@ const AddToLibraryForm: React.FC<Props> = ({ onClose }) => {
       toast.error("Something went wrong");
     },
   });
-
-  const sessionTypes = [
-    { key: "VIDEO", label: "VIDEO" },
-    { key: "MUSIC", label: "MUSIC" },
-    { key: "FILE", label: "FILE" },
-  ];
 
   const onSubmit = (data: TLibrarySchema) => {
     const libData = {
@@ -104,7 +104,7 @@ const AddToLibraryForm: React.FC<Props> = ({ onClose }) => {
       <div>
         <Select
           {...register("type")}
-          items={sessionTypes}
+          items={mediaTypes}
           label="Type"
           className="block max-w-[160px]"
           classNames={{ popoverContent: ["bg-background"], trigger:"border border-cultured/30" }}
