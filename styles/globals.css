@@ -2,11 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-
-main > div > nav > header{
-  @apply w-full !max-w-7xl mx-auto 
-}
-
-main > div > nav > header > div {
-  @apply px-3
-}
