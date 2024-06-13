@@ -19,6 +19,15 @@ type Props = {
   onClose: () => void;
 };
 
+export const sessionTypes = [
+  { key: "MEETING", label: "MEETING" },
+  { key: "DEEP_FOCUS", label: "DEEP_FOCUS" },
+  { key: "NETWORKING", label: "NETWORKING" },
+  { key: "LESSON", label: "LESSON" },
+  { key: "COLLABORATION", label: "COLLABORATION" },
+  { key: "PUBLIC", label: "PUBLIC" },
+];
+
 const CreateSessionForm: React.FC<Props> = ({ onClose }) => {
   const { id } = useParams();
   const [selectedDate, setSelectedDate] = useState(now(getLocalTimeZone()));
@@ -51,15 +60,6 @@ const CreateSessionForm: React.FC<Props> = ({ onClose }) => {
       toast.error("Something went wrong");
     },
   });
-
-  const sessionTypes = [
-    { key: "MEETING", label: "MEETING" },
-    { key: "DEEP_FOCUS", label: "DEEP_FOCUS" },
-    { key: "NETWORKING", label: "NETWORKING" },
-    { key: "LESSON", label: "LESSON" },
-    { key: "COLLABORATION", label: "COLLABORATION" },
-    { key: "PUBLIC", label: "PUBLIC" },
-  ];
 
   const onSubmit = (data: TSessionSchema) => {
     const sessionData = {
