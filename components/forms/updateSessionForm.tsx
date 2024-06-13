@@ -13,6 +13,7 @@ import { updateSession } from "@/app/lib/sessions";
 import { useState } from "react";
 import { DateTime } from "luxon";
 import { getLocalTimeZone, parseAbsolute } from "@internationalized/date";
+import { sessionTypes } from "./createSessionForm";
 
 type Props = {
   session: Session;
@@ -51,15 +52,6 @@ const UpdateSessionForm: React.FC<Props> = ({ session, onClose }) => {
       toast.error("Something went wrong");
     },
   });
-
-  const sessionTypes = [
-    { key: "MEETING", label: "MEETING" },
-    { key: "DEEP_FOCUS", label: "DEEP FOCUS" },
-    { key: "NETWORKING", label: "NETWORKING" },
-    { key: "LESSON", label: "LESSON" },
-    { key: "COLLABORATION", label: "COLLABORATION" },
-    { key: "PUBLIC", label: "PUBLIC" },
-  ];
 
   const onSubmit = (data: TSessionSchema) => {
     const sessionData = {
