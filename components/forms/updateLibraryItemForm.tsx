@@ -10,6 +10,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Select, SelectItem } from "@nextui-org/select";
 import { Textarea } from "@nextui-org/input";
 import { updateLibraryItem } from "@/app/lib/library";
+import { mediaTypes } from "./addToLibraryForm";
 
 type Props = {
   libraryItem: LibraryItem;
@@ -44,12 +45,6 @@ const UpdateLibraryItemForm: React.FC<Props> = ({ libraryItem, onClose }) => {
       toast.error("Something went wrong");
     },
   });
-
-  const sessionTypes = [
-    { key: "VIDEO", label: "VIDEO" },
-    { key: "MUSIC", label: "MUSIC" },
-    { key: "FILE", label: "FILE" },
-  ];
 
   const onSubmit = (data: TLibrarySchema) => {
     const libData = {
@@ -112,7 +107,7 @@ const UpdateLibraryItemForm: React.FC<Props> = ({ libraryItem, onClose }) => {
       <div>
         <Select
           {...register("type")}
-          items={sessionTypes}
+          items={mediaTypes}
           label="Type"
           className="block max-w-[160px]"
           classNames={{
