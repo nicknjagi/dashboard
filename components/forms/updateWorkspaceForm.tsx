@@ -10,7 +10,7 @@ import { Checkbox } from "@nextui-org/checkbox";
 import { updateWorkspace } from "@/app/lib/workspaces";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {Select, SelectItem} from "@nextui-org/select";
-import { fetchFacilitators } from "@/app/lib/facilitators";
+import { fetchAllFacilitators } from "@/app/lib/facilitators";
 import Loading from "../loading";
 
 type Props = {
@@ -37,7 +37,7 @@ const UpdateWorkspaceForm: React.FC<Props> = ({ workspace, onClose }) => {
   const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery({
     queryKey: ["facilitators"],
-    queryFn: fetchFacilitators,
+    queryFn: fetchAllFacilitators,
   });
 
   const mutation = useMutation({
