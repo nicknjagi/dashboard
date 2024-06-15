@@ -14,8 +14,10 @@ import { fetchFacilitators } from "@/app/lib/facilitators";
 import { BadgeCheck } from "lucide-react";
 import Loading from "./loading";
 import { User } from "@nextui-org/user";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { DateTime } from "luxon";
+import { useState } from "react";
+import { Pagination } from "@nextui-org/pagination";
 
 type Props = {};
 
@@ -35,9 +37,13 @@ const columns = [
 ];
 
 export default function FacilitatorsList({}: Props) {
+  const [page, setPage] = useState(1);
+  const [perPage] = useState(10);
+  
   const { data, error, isLoading } = useQuery({
-    queryKey: ["facilitators"],
-    queryFn: fetchFacilitators,
+    queryKey: ["facilitators", page],
+    queryFn: () => fetchFacilitators(page, perPage),
+    placeholderData: keepPreviousData,
   });
 
   if (isLoading) {
@@ -51,7 +57,21 @@ export default function FacilitatorsList({}: Props) {
   return (
     <div className="mt-6 overflow-x-auto rounded-2xl shadow-md max-w-fit">
       <Table
-        // isStriped
+        bottomContent={
+          <div className="flex w-full justify-center">
+            <Pagination
+              isCompact
+              showControls
+              showShadow
+              page={page}
+              total={data.totalPages}
+              onChange={setPage}
+              classNames={{
+                cursor:"bg-cultured/20 shadow-cultured/10 text-white font-bold"
+              }}
+            />
+          </div>
+        }
         classNames={{
           wrapper: [
             "bg-background border border-cultured/10 w-full min-w-[640px] max-w-fit",
