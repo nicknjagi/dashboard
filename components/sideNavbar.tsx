@@ -95,7 +95,7 @@ export default function SideNavbar({}: Props) {
   return (
     <nav
       className={clsx(
-        `flex md:flex-col justify-between md:justify-normal p-4 w-full transition-all duration-200 ease-soft-spring origin-left bg-forrestGreen md:h-screen overflow-y-auto ${
+        `flex md:flex-col justify-between md:justify-normal p-4 w-full transition-all duration-300 origin-left bg-forrestGreen md:h-screen overflow-y-auto ${
           isCollapsed ? "md:w-fit" : " md:px-6 md:w-full"
         } md:max-w-[280px] border-b md:border-r border-gold/50 relative`
       )}
@@ -161,7 +161,7 @@ export default function SideNavbar({}: Props) {
                   >
                     <link.icon aria-label={link.title} />
                     <span
-                      className={clsx("", {
+                      className={clsx("transition-all duration-300 ease-linear origin-left", {
                         "md:hidden": isCollapsed,
                         "md:inline": !isCollapsed,
                       })}

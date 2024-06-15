@@ -32,7 +32,7 @@ export default function RootLayout({
 				)}
 			>
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-					<div className="relative flex flex-col md:flex-row min-h-screen md:max-h-screen transition-all ease-soft-spring duration-200">
+					<div className="relative flex flex-col md:flex-row min-h-screen md:max-h-screen transition-all duration-300">
 						<SideNavbar />
 						<main className="w-full md:overflow-x-auto h-screen">
 							<div className="sticky top-0 w-full z-50 bg-forrestGreen">
