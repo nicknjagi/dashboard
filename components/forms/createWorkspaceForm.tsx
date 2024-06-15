@@ -11,7 +11,7 @@ import { createWorkspace } from "@/app/lib/workspaces";
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {Select, SelectItem} from "@nextui-org/select";
 import Loading from "../loading";
-import { fetchFacilitators } from "@/app/lib/facilitators";
+import { fetchAllFacilitators } from "@/app/lib/facilitators";
 
 type Props = {
   onClose: () => void;
@@ -29,7 +29,7 @@ const CreateWorkspaceForm: React.FC<Props> = ({ onClose }) => {
   const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery({
     queryKey: ["facilitators"],
-    queryFn: fetchFacilitators,
+    queryFn: fetchAllFacilitators,
   });
 
   const mutation = useMutation({
