@@ -1,14 +1,5 @@
 "use client";
 
-import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  getKeyValue,
-} from "@nextui-org/table";
 import { Account } from "@/types";
 import Loading from "./loading";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
@@ -20,28 +11,6 @@ import { Pagination } from "@nextui-org/pagination";
 import { useState } from "react";
 
 type Props = {};
-
-const columns = [
-  {
-    key: "userId",
-    label: "USER ID",
-  },
-  {
-    key: "subscription_type",
-    label: "SUBSCRIPTION TYPE",
-  },
-  {
-    key: "active",
-    label: "ACTIVE",
-  },
-  {
-    key: "valid_until",
-    label: "VALID UNTIL",
-  },{
-    key: "actions",
-    label: "ACTIONS",
-  },
-];
 
 export default function AccountsList({}: Props) {
   const [page, setPage] = useState(1);
@@ -62,64 +31,63 @@ export default function AccountsList({}: Props) {
   }
 
   return (
-    <div className="mt-6 overflow-x-auto rounded-2xl shadow-md max-w-fit">
-      <Table
-        bottomContent={
-          <div className="flex w-full justify-center">
-            <Pagination
-              isCompact
-              showControls
-              showShadow
-              page={page}
-              total={data.totalPages}
-              onChange={setPage}
-              classNames={{
-                cursor:"bg-cultured/20 shadow-cultured/10 text-white font-bold"
-              }}
-            />
-          </div>
-        }
-        classNames={{
-          wrapper: [
-            "bg-background border border-cultured/10 w-full min-w-[700px] max-w-fit",
-          ],
-          th: ["bg-cultured/10 "],
-        }}
-        aria-label="Facilitators list"
-      >
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
-          )}
-        </TableHeader>
-        {data.items.length > 0 ? (
-          <TableBody items={data.items}>
-            {(account: Account) => (
-              <TableRow key={account.userId}>
-                {(columnKey) => (
-                  <TableCell>
-                    {columnKey === "active" ? (
-                      account.active ? (
-                        <Chip size="sm" color="success">Active</Chip>
-                      ) : (
-                        <Chip size="sm">Paused</Chip>
-                      )
-                    ) : columnKey === "actions" ? (
-                      <UpdateAccountModal account={account}/>
-                    ) : columnKey === "valid_until" ? (
-                      <span>{DateTime.fromISO(account.valid_until.replace(" ", "T"), { zone: 'utc' }).toFormat("dd/MM/yyyy hh:mm a")}</span>
-                    ) : (
-                      getKeyValue(account, columnKey)
-                    )}
-                  </TableCell>
+    <div className="mt-6 flex flex-wrap justify-center md:justify-start gap-4">
+      {data.items.length > 0 ? (
+        data.items.map((account: Account) => (
+          <div
+            key={account.userId}
+            className="flex justify-between p-4 w-full md:max-w-md border border-cultured/10 rounded-lg bg-forrestGreen"
+          >
+            <div>
+              <h2 className="text-lg font-semibold">{account.userId}</h2>
+              <p className="mt-1 text-sm text-cultured/70">
+                Subscription Type: {account.subscription_type}
+              </p>
+              <p className="mt-1 text-sm text-cultured/70">
+                Status:{" "}
+                {account.active ? (
+                  <Chip
+                    size="sm"
+                    color="success"
+                    classNames={{
+                      base: "px-1 scale-90",
+                      content: "text-black font-semibold"
+                    }}
+                  >
+                    Active
+                  </Chip>
+                ) : (
+                  <Chip size="sm">Paused</Chip>
                 )}
-              </TableRow>
-            )}
-          </TableBody>
-        ) : (
-          <TableBody emptyContent={"No rows to display."}>{[]}</TableBody>
-        )}
-      </Table>
+              </p>
+              <p className="mt-1 text-sm text-cultured/70">
+                Valid Until:{" "}
+                {DateTime.fromISO(account.valid_until.replace(" ", "T"), {
+                  zone: "utc",
+                }).toFormat("dd/MM/yyyy hh:mm a")}
+              </p>
+            </div>
+            <div>
+              <UpdateAccountModal account={account} />
+            </div>
+          </div>
+        ))
+      ) : (
+        <p className="mt-10">No accounts to display.</p>
+      )}
+      <div className="w-full mt-6">
+        <Pagination
+          isCompact
+          showControls
+          showShadow
+          page={page}
+          total={data.totalPages}
+          onChange={setPage}
+          classNames={{
+            cursor: "bg-cultured/20 shadow-cultured/10 text-white font-bold",
+          }}
+        />
+      </div>
     </div>
   );
 }
