@@ -74,7 +74,7 @@ export default function UsersList({}: Props) {
                   content="unverified"
                   className="capitalize"
                   classNames={{
-                    base:["rounded-lg bg-[#4d0000]"],
+                    base:["rounded-lg bg-[#ff4d4d]"],
                     content: [
                       "bg-transparent",
                       "px-2",
@@ -83,7 +83,7 @@ export default function UsersList({}: Props) {
                   }}
                 >
                   <CircleAlert
-                    color="#4d0000"
+                    color="#ff4d4d"
                     className="ml-auto cursor-pointer"
                   />
                 </Tooltip>
