@@ -47,25 +47,23 @@ export default function MenuMobile({}: Props) {
                 <p className="font-semibold">Signed in as</p>
                 <p className="font-semibold">{userModel?.email}</p>
               </DropdownItem>
-              <DropdownItem textValue='nav links' key={'links'}>
-                <div className="flex flex-col items-start md:hidden">
+              <DropdownItem textValue='nav links' key={'links'} className="px-1">
+                <div className="flex flex-col gap-2 items-start md:hidden">
                   {links
                   .filter((link) => userModel && link.roles.includes(userModel.AccountType)) 
                   .map((link, i) => {
                     return (
                       <div className="w-full " key={i}>
-                        <Button
-                          as={Link}
+                        <Link
                           href={link.href}
-                          variant="light"
                           className={clsx("flex justify-start gap-3 rounded-lg px-1 min-w-6", {
-                            "bg-cultured text-forrestGreen focus:text-forrestGreen hover:text-cultured":
+                            "text-gold underline":
                               pathname === link.href
                           })}
                         >
                           {/* <link.icon aria-label={link.title} /> */}
                           <span>{link.title}</span>
-                        </Button>
+                        </Link>
                       </div>
                     );
                   })}

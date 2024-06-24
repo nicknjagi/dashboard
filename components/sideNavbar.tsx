@@ -139,7 +139,7 @@ export default function SideNavbar({}: Props) {
                     ],
                     content: [
                       "shadow-xl",
-                      "text-black bg-gradient-to-br from-white to-neutral-400",
+                      "text-black bg-cultured",
                       `${isCollapsed ? "" : mobileWidth ? "" : "hidden"}`,
                     ],
                   }}
@@ -184,7 +184,7 @@ export default function SideNavbar({}: Props) {
               ],
               content: [
                 "shadow-xl",
-                "text-black bg-gradient-to-br from-white to-neutral-400",
+                "text-black bg-cultured",
                 `${isCollapsed ? "" : mobileWidth ? "" : "hidden"}`,
               ],
             }}
