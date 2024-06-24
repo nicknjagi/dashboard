@@ -23,7 +23,7 @@ export default function UpdateAccountModal({ account }: Props) {
       <Button
         size="sm"
         onClick={onOpen}
-        variant="light"
+        variant="bordered"
       >
         <span>update</span>
       </Button>
