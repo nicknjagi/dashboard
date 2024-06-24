@@ -51,50 +51,32 @@ export default function UsersList({}: Props) {
               >
                 {user.email}
               </User>
-              {user.verified ? (
-                <Tooltip
-                  content="verified"
-                  className="capitalize"
-                  classNames={{
-                    base:["rounded-lg bg-[#48b446]"],
-                    content: [
-                      "bg-transparent",
-                      "px-2",
-                      "text-sm text-black",
-                    ],
-                  }}
-                >
-                  <BadgeCheck
-                    color="#48b446"
-                    className="ml-auto cursor-pointer"
-                  />
-                </Tooltip>
-              ) : (
-                <Tooltip
-                  content="unverified"
-                  className="capitalize"
-                  classNames={{
-                    base:["rounded-lg bg-[#ff4d4d]"],
-                    content: [
-                      "bg-transparent",
-                      "px-2",
-                      "text-sm text-white",
-                    ],
-                  }}
-                >
-                  <CircleAlert
-                    color="#ff4d4d"
-                    className="ml-auto cursor-pointer"
-                  />
-                </Tooltip>
-              )}
+              <div className="ml-auto cursor-pointer scale-75">
+                {user.verified ? (
+                  <Tooltip
+                    content="verified"
+                    className="capitalize"
+                    classNames={{
+                      base: ["rounded-lg", "scale-50"],
+                      content: ["px-2", "text-[12px]"],
+                    }}
+                  >
+                    <BadgeCheck color="#48b446" />
+                  </Tooltip>
+                ) : (
+                  <Tooltip
+                    content="unverified"
+                    className="capitalize"
+                    classNames={{
+                      base: ["rounded-lg", "scale-50"],
+                      content: ["px-2", "text-[12px]"],
+                    }}
+                  >
+                    <CircleAlert color="#ff4d4d" />
+                  </Tooltip>
+                )}
+              </div>
             </div>
-            {/* <p className="mt-2 text-sm text-gray-600">
-              Created:{" "}
-              {DateTime.fromISO(user.created.replace(" ", "T"), {
-                zone: "utc",
-              }).toFormat("dd/MM/yyyy hh:mm a")}
-            </p> */}
           </div>
         ))
       ) : (
@@ -108,7 +90,8 @@ export default function UsersList({}: Props) {
           total={data.totalPages}
           onChange={setPage}
           classNames={{
-            cursor: "bg-forrestGreen shadow-sm shadow-cultured/10 text-white font-bold",
+            cursor:
+              "bg-forrestGreen shadow-sm shadow-cultured/10 text-white font-bold",
           }}
         />
       </div>
