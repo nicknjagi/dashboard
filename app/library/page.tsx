@@ -8,7 +8,6 @@ export default function Facilitators({}: Props) {
     <section className="py-2">
       <div className="flex justify-between items-center">
         <h1 className={"text-xl md:text-2xl font-medium"}>Library</h1>
-        <AddToLibraryModal />
       </div>
       <LibraryList />
     </section>
