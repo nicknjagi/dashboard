@@ -78,7 +78,8 @@ export type TLibrarySchema = z.infer<typeof LibrarySchema>
 
 export const FileLibrarySchema = z.object({
   name: z.string().min(2, "Title is required"),
-  content: z.string()
+  description: z.string(),
+  content: z.string(),
 })
 
 export type TFileLibrarySchema = z.infer<typeof FileLibrarySchema>
