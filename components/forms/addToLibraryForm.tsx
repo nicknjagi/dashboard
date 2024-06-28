@@ -10,6 +10,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Select, SelectItem } from "@nextui-org/select";
 import { Textarea } from "@nextui-org/input";
 import { createLibraryItem } from "@/app/lib/library";
+import { useState } from "react";
 
 type Props = {
   onClose: () => void;
@@ -18,14 +19,14 @@ type Props = {
 export const mediaTypes = [
   { key: "VIDEO", label: "VIDEO" },
   { key: "MUSIC", label: "MUSIC" },
-  { key: "FILE", label: "FILE" },
 ];
 
 const AddToLibraryForm: React.FC<Props> = ({ onClose }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     reset,
   } = useForm<TLibrarySchema>({
     resolver: zodResolver(LibrarySchema),
@@ -40,14 +41,17 @@ const AddToLibraryForm: React.FC<Props> = ({ onClose }) => {
       toast.success("Added to library successfully");
       reset();
       onClose();
+      setIsSubmitting(false)
     },
     onError: (error: any) => {
       console.error(error);
       toast.error("Something went wrong");
+      setIsSubmitting(false)
     },
   });
 
   const onSubmit = (data: TLibrarySchema) => {
+    setIsSubmitting(true)
     const libData = {
       ...data,
     };
@@ -129,21 +133,6 @@ const AddToLibraryForm: React.FC<Props> = ({ onClose }) => {
         />
         {errors.thumbnail && (
           <small className="mt-1 ml-1 text-red-500">{`${errors.thumbnail.message}`}</small>
-        )}
-      </div>
-
-      <div>
-        <Textarea
-          {...register("content")}
-          variant="bordered"
-          label="Content"
-          className="col-span-12 md:col-span-6 mb-6 md:mb-0"
-          classNames={{
-            inputWrapper:"border border-cultured/30"
-          }}
-        />
-        {errors.content && (
-          <small className="mt-1 ml-1 text-red-500">{`${errors.content.message}`}</small>
         )}
       </div>
 
