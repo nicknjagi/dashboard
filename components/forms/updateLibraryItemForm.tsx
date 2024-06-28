@@ -138,21 +138,6 @@ const UpdateLibraryItemForm: React.FC<Props> = ({ libraryItem, onClose }) => {
         )}
       </div>
 
-      <div>
-        <Textarea
-          {...register("content")}
-          variant="bordered"
-          label="Content"
-          className="col-span-12 md:col-span-6 mb-6 md:mb-0"
-          classNames={{
-            inputWrapper: "border border-cultured/30",
-          }}
-        />
-        {errors.content && (
-          <small className="mt-1 ml-1 text-red-500">{`${errors.content.message}`}</small>
-        )}
-      </div>
-
       <div className="flex justify-end">
         <Button
           type="submit"
