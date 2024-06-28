@@ -11,6 +11,7 @@ import {
   ModalFooter,
 } from "@nextui-org/modal";
 import React from "react";
+import "@/styles/tiptap-content.css";
 
 type Props = {
   children: string;
@@ -40,13 +41,14 @@ export default function Content({ children }: Props) {
         isDismissable={false}
         scrollBehavior="inside"
         isKeyboardDismissDisabled={true}
+        placement="top-center"
       >
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader>
               </ModalHeader>
-              <ModalBody>{parse(children)}</ModalBody>
+              <ModalBody className="tiptap-content">{parse(children)}</ModalBody>
               <ModalFooter>
                 <Button onPress={onClose}>Close</Button>
               </ModalFooter>
