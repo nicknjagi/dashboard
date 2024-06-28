@@ -11,7 +11,7 @@ import { Button, ButtonGroup } from "@nextui-org/button";
 import { useState } from "react";
 import { clsx } from "clsx";
 import Content from "./content";
-import Tiptap from "./tiptap";
+import AddFileForm from "./forms/addFileForm";
 import AddToLibraryModal from "./modals/addToLibraryModal";
 
 type Props = {};
@@ -28,7 +28,7 @@ export default function LibraryList({}: Props) {
   const types = ["MUSIC", "VIDEO", "FILE"];
 
   if (isLoading) return <Loading />;
-  if (error) return <p className="mt-10">Something went wrong</p>;
+  if (error) return <p className="mt-10">Error fetching library items</p>;
 
   return (
     <section className="mt-6">
@@ -54,7 +54,7 @@ export default function LibraryList({}: Props) {
             );
           })}
         </ButtonGroup>
-        {mediaType === 'FILE' ? <Tiptap /> : <AddToLibraryModal />}
+        {mediaType === 'FILE' ? <AddFileForm /> : <AddToLibraryModal />}
       </div>
       {isFetching ? (
         <Loading />
