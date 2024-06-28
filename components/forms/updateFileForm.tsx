@@ -35,10 +35,10 @@ const UpdateFileForm: React.FC<Props> = ({libraryItem}) => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<TFileLibrarySchema>({
+  } = useForm<LibraryItem>({
     resolver: zodResolver(FileLibrarySchema),
     defaultValues:{
-      name:libraryItem.name
+      ...libraryItem
     }
   });
 
@@ -114,8 +114,9 @@ const UpdateFileForm: React.FC<Props> = ({libraryItem}) => {
               <ModalBody className="py-0">
                 <form
                   onSubmit={handleSubmit(onSubmit)}
-                  className="flex flex-col gap-4"
+                  className="flex flex-col gap-3"
                 >
+                  {/* name */}
                   <div>
                     <Input
                       {...register("name")}
@@ -130,35 +131,32 @@ const UpdateFileForm: React.FC<Props> = ({libraryItem}) => {
                       <small className="mt-1 ml-1 text-red-500">{`${errors.name.message}`}</small>
                     )}
                   </div>
-
+                  {/* description */}
                   <div>
-                    <h4 className="text-sm mb-1">Content</h4>
+                    <Input
+                      {...register("description")}
+                      type="text"
+                      variant={"underlined"}
+                      classNames={{
+                        inputWrapper: "border-b border-cultured/30",
+                      }}
+                      label="Description"
+                    />
+                    {errors.description && (
+                      <small className="mt-1 ml-1 text-red-500">{`${errors.description.message}`}</small>
+                    )}
+                  </div>
+                    {/* content */}
+                  <div>
+                    <h4 className="text-sm mt-4 mb-1">Content</h4>
                     <div className="rounded-lg bg-forrestGreen border border-cultured/20">
-                      <Toolbar editor={editor} content={content} />
+                      <Toolbar editor={editor} content={content} isSubmitting={isSubmitting}/>
                       <EditorContent
                         style={{ whiteSpace: "pre-line" }}
                         editor={editor}
                         className="prose prose-invert max-w-full w-full"
                       />
                     </div>
-                  </div>
-
-                  <Textarea
-                    {...register("content")}
-                    variant="bordered"
-                    label="Content"
-                    value={content}
-                    className="hidden"
-                  />
-
-                  <div className="w-fit ml-auto">
-                    <Button
-                      type="submit"
-                      size="sm"
-                      className="bg-cultured text-forrestGreen hover:bg-opacity-90 font-medium"
-                    >
-                      {isSubmitting ? "updating..." : "Submit"}
-                    </Button>
                   </div>
                 </form>
               </ModalBody>
