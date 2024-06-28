@@ -23,6 +23,7 @@ type Props = {
   editor: Editor | null;
   content: string;
 };
+
 export default function Toolbar({ editor, content}: Props) {
   if (!editor) {
     return null;
@@ -228,17 +229,6 @@ export default function Toolbar({ editor, content}: Props) {
           <Redo size={18} />
         </button>
       </div>
-      {content && (
-        <div className="w-fit">
-          <Button
-            type="submit"
-            size="sm"
-            className="bg-cultured text-forrestGreen hover:bg-opacity-90 font-medium"
-          >
-            Submit
-          </Button>
-        </div>
-      )}
     </div>
   );
 }
