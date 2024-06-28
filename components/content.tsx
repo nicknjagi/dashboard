@@ -47,7 +47,7 @@ export default function Content({ children }: Props) {
             <>
               <ModalHeader>
               </ModalHeader>
-              <ModalBody className="prose text-white">{parse(children)}</ModalBody>
+              <ModalBody className="prose prose-invert max-w-full w-full">{parse(children)}</ModalBody>
               <ModalFooter>
                 <Button onPress={onClose}>Close</Button>
               </ModalFooter>

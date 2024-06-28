@@ -138,7 +138,7 @@ const UpdateFileForm: React.FC<Props> = ({libraryItem}) => {
                       <EditorContent
                         style={{ whiteSpace: "pre-line" }}
                         editor={editor}
-                        className="prose text-white"
+                        className="prose prose-invert max-w-full w-full"
                       />
                     </div>
                   </div>
