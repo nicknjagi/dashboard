@@ -62,20 +62,26 @@ export type Account = {
 };
 
 export const AccountSchema = z.object({
-  subscription_type: z.string().min(1, "Subscription type is required"),
+  subscription_type: z.string().min(2, "Subscription type is required"),
   active: z.boolean().default(false),
 })
 
 export const LibrarySchema = z.object({
-  name: z.string(),
+  name: z.string().min(2, "Name is required"),
   description: z.string(),
-  type: z.string(),
+  type: z.string().min(2, "Please choose a type"),
   link: z.string(),
   thumbnail: z.string(),
-  content: z.string()
 })
 
 export type TLibrarySchema = z.infer<typeof LibrarySchema>
+
+export const FileLibrarySchema = z.object({
+  name: z.string().min(2, "Title is required"),
+  content: z.string()
+})
+
+export type TFileLibrarySchema = z.infer<typeof FileLibrarySchema>
 
 export type LibraryItem = {
   id: string;
