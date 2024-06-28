@@ -29,7 +29,7 @@ export default function Toolbar({ editor, content}: Props) {
     return null;
   }
   return (
-    <div className="flex flex-wrap flex-row items-center justify-between p-2 gap-2 border-b border-cultured/20">
+    <div className="flex flex-wrap flex-row items-center justify-between p-2 gap-2 border-b border-cultured/20 rounded-t-lg bg-forrestGreen sticky top-0 z-20">
       <div className="flex flex-wrap justify-start items-center gap-1 w-fit my-1">
         {/* Bold button */}
         <button

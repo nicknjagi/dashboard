@@ -111,7 +111,7 @@ const UpdateFileForm: React.FC<Props> = ({libraryItem}) => {
               {/* <ModalHeader className="flex flex-col gap-1 pb-0">
                 add
               </ModalHeader> */}
-              <ModalBody>
+              <ModalBody className="py-0">
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="flex flex-col gap-4"
