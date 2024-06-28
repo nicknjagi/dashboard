@@ -52,5 +52,7 @@ module.exports = {
         // ... rest of the colors
       },
     },
-  })],
+  }),
+  require('@tailwindcss/typography')
+],
 }
