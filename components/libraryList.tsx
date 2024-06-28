@@ -84,7 +84,7 @@ export default function LibraryList({}: Props) {
                 key={library.id}
                 className="p-4 w-full md:max-w-sm border shadow bg-forrestGreen border-cultured/20 rounded-xl"
               >
-                <h2 className="text-xl capitalize">{library.name}</h2>
+                <h3 className="text-xl capitalize">{library.name}</h3>
                 <p>{library.description}</p>
                 <video controls>
                   <source src={library.link} type="video/mp4" />
@@ -100,13 +100,13 @@ export default function LibraryList({}: Props) {
                 key={library.id}
                 className="p-4 w-full md:max-w-sm border shadow bg-forrestGreen border-cultured/20 rounded-xl"
               >
-                <h2 className="text-xl capitalize">{library.name || library.description}</h2>
+                <h3 className="text-xl capitalize">{library.name || library.description}</h3>
                 <div className="flex justify-between items-center mt-4">
                   <div className="flex gap-2">
                     <UpdateFileForm libraryItem={library} />
                     <DeleteLibraryItemModal libraryItem={library} />
                   </div>
-                  <Content>{library.content}</Content>
+                  <Content libraryItem={library}>{library.content}</Content>
                 </div>
               </div>
             );
