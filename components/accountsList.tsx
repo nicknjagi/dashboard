@@ -43,8 +43,8 @@ export default function AccountsList({}: Props) {
               <p className="mt-1 text-sm text-cultured/70">
                 Subscription Type: {account.subscription_type}
               </p>
-              <p className="mt-1 text-sm text-cultured/70">
-                Status:{" "}
+              <div className="mt-1 text-sm text-cultured/70">
+                <span>Status:</span>{" "}
                 {account.active ? (
                   <Chip
                     size="sm"
@@ -59,7 +59,7 @@ export default function AccountsList({}: Props) {
                 ) : (
                   <Chip size="sm">Paused</Chip>
                 )}
-              </p>
+              </div>
               <p className="mt-1 text-sm text-cultured/70">
                 Valid Until:{" "}
                 {DateTime.fromISO(account.valid_until.replace(" ", "T"), {
@@ -79,12 +79,12 @@ export default function AccountsList({}: Props) {
         <Pagination
           isCompact
           showControls
-          showShadow
           page={page}
           total={data.totalPages}
           onChange={setPage}
           classNames={{
-            cursor: "bg-cultured/20 shadow-cultured/10 text-white font-bold",
+            cursor:
+              "bg-forrestGreen border border-cultured/20 text-white font-bold",
           }}
         />
       </div>
