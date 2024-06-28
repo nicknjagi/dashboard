@@ -1,5 +1,5 @@
 
-import { LibraryItem, TLibrarySchema } from "@/types";
+import { LibraryItem, TFileLibrarySchema, TLibrarySchema } from "@/types";
 import { BASE_URL, pb } from "./utils";
 import axios from "axios";
 
@@ -18,7 +18,7 @@ export async function getLibraryItems(type: string) {
   }
 }
 
-export async function createLibraryItem(data: TLibrarySchema) {
+export async function createLibraryItem(data: TLibrarySchema | TFileLibrarySchema) {
   try {
     const url = `${BASE_URL}/api/collections/library/records`
     const response = await axios.post(url, data, {
