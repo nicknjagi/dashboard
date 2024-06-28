@@ -21,7 +21,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createLibraryItem } from "@/app/lib/library";
 import toast from "react-hot-toast";
-import "@/styles/tiptap-content.css";
 
 type Props = {};
 
@@ -137,7 +136,7 @@ const AddFileForm: React.FC<Props> = () => {
                       <EditorContent
                         style={{ whiteSpace: "pre-line" }}
                         editor={editor}
-                        className="tiptap-content"
+                        className="prose text-white"
                       />
                     </div>
                   </div>
