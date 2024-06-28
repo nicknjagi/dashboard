@@ -91,7 +91,7 @@ export default function FacilitatorsList({}: Props) {
           onChange={setPage}
           classNames={{
             cursor:
-              "bg-forrestGreen shadow-sm shadow-cultured/10 text-white font-bold",
+              "bg-forrestGreen border border-cultured/20 text-white font-bold",
           }}
         />
       </div>
