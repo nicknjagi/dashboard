@@ -13,6 +13,7 @@ import { clsx } from "clsx";
 import Content from "./content";
 import AddFileForm from "./forms/addFileForm";
 import AddToLibraryModal from "./modals/addToLibraryModal";
+import UpdateFileForm from "./forms/updateFileForm";
 
 type Props = {};
 
@@ -99,10 +100,10 @@ export default function LibraryList({}: Props) {
                 key={library.id}
                 className="p-4 w-full md:max-w-sm border shadow bg-forrestGreen border-cultured/20 rounded-xl"
               >
-                <h2 className="text-xl capitalize">{library.description}</h2>
+                <h2 className="text-xl capitalize">{library.name}</h2>
                 <div className="flex justify-between items-center mt-4">
                   <div className="flex gap-2">
-                    <UpdateLibraryItemModal libraryItem={library} />
+                    <UpdateFileForm libraryItem={library} />
                     <DeleteLibraryItemModal libraryItem={library} />
                   </div>
                   <Content>{library.content}</Content>
