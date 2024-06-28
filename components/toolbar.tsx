@@ -22,15 +22,16 @@ import {
 type Props = {
   editor: Editor | null;
   content: string;
+  isSubmitting: boolean;
 };
 
-export default function Toolbar({ editor, content}: Props) {
+export default function Toolbar({ editor, content, isSubmitting }: Props) {
   if (!editor) {
     return null;
   }
   return (
     <div className="flex flex-wrap flex-row items-center justify-between p-2 gap-2 border-b border-cultured/20 rounded-t-lg bg-forrestGreen sticky top-0 z-20">
-      <div className="flex flex-wrap justify-start items-center gap-1 w-fit my-1">
+      <div className="flex flex-wrap justify-start items-center gap-1 w-full my-1">
         {/* Bold button */}
         <button
           onClick={(e) => {
@@ -175,8 +176,12 @@ export default function Toolbar({ editor, content}: Props) {
         <button
           onClick={(e) => {
             e.preventDefault();
-            const url = window.prompt('URL')
-            editor.chain().focus().setImage({ src: url as string }).run()
+            const url = window.prompt("URL");
+            editor
+              .chain()
+              .focus()
+              .setImage({ src: url as string })
+              .run();
           }}
           className={
             editor.isActive("code")
@@ -204,7 +209,7 @@ export default function Toolbar({ editor, content}: Props) {
         <button
           onClick={(e) => {
             e.preventDefault();
-            editor.chain().focus().undo().run()
+            editor.chain().focus().undo().run();
           }}
           className={
             editor.isActive("undo")
@@ -228,6 +233,16 @@ export default function Toolbar({ editor, content}: Props) {
         >
           <Redo size={18} />
         </button>
+        {/* submit button */}
+        <div className="w-fit inline-block ml-auto">
+          <Button
+            type="submit"
+            size="sm"
+            className="bg-cultured text-forrestGreen hover:bg-opacity-90 font-medium"
+          >
+            {isSubmitting ? "please wait..." : "Submit"}
+          </Button>
+        </div>
       </div>
     </div>
   );
