@@ -11,12 +11,14 @@ import {
   ModalFooter,
 } from "@nextui-org/modal";
 import React from "react";
+import { LibraryItem } from "@/types";
 
 type Props = {
   children: string;
+  libraryItem:LibraryItem
 };
 
-export default function Content({ children }: Props) {
+export default function Content({ children, libraryItem }: Props) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
@@ -46,6 +48,7 @@ export default function Content({ children }: Props) {
           {(onClose) => (
             <>
               <ModalHeader>
+                <h2>{libraryItem.description}</h2>
               </ModalHeader>
               <ModalBody className="prose prose-invert max-w-full w-full">{parse(children)}</ModalBody>
               <ModalFooter>
