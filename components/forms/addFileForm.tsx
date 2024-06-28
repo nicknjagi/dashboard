@@ -35,6 +35,9 @@ const AddFileForm: React.FC<Props> = () => {
     reset,
   } = useForm<TFileLibrarySchema>({
     resolver: zodResolver(FileLibrarySchema),
+    defaultValues: {
+      content: "",
+    },
   });
 
   const queryClient = useQueryClient();
@@ -49,7 +52,7 @@ const AddFileForm: React.FC<Props> = () => {
     onUpdate: ({ editor }) => {
       handleContentChange(editor.getHTML());
     },
-    content
+    content,
   });
 
   const mutation = useMutation({
@@ -58,24 +61,24 @@ const AddFileForm: React.FC<Props> = () => {
       queryClient.invalidateQueries({ queryKey: ["libraries"] }); // Invalidate and refetch
       toast.success("Added to library successfully");
       reset();
-      setContent('')
-      editor?.commands.setContent('')
-      onClose()
-      setIsSubmitting(false)
+      setContent("");
+      editor?.commands.setContent("");
+      onClose();
+      setIsSubmitting(false);
     },
     onError: (error: any) => {
       console.error(error);
       toast.error("Something went wrong");
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     },
   });
 
   const onSubmit = (data: TFileLibrarySchema) => {
-    setIsSubmitting(true)
+    setIsSubmitting(true);
     const libData = {
       ...data,
       content,
-      type:'FILE'
+      type: "FILE",
     };
     mutation.mutate(libData);
   };
@@ -112,8 +115,9 @@ const AddFileForm: React.FC<Props> = () => {
               <ModalBody className="py-0">
                 <form
                   onSubmit={handleSubmit(onSubmit)}
-                  className="flex flex-col gap-4"
+                  className="flex flex-col gap-3"
                 >
+                  {/* name */}
                   <div>
                     <Input
                       {...register("name")}
@@ -128,35 +132,36 @@ const AddFileForm: React.FC<Props> = () => {
                       <small className="mt-1 ml-1 text-red-500">{`${errors.name.message}`}</small>
                     )}
                   </div>
-
+                    {/* description */}
                   <div>
-                    <h4 className="text-sm mb-1">Content</h4>
+                    <Input
+                      {...register("description")}
+                      type="text"
+                      variant={"underlined"}
+                      classNames={{
+                        inputWrapper: "border-b border-cultured/30",
+                      }}
+                      label="Description"
+                    />
+                    {errors.description && (
+                      <small className="mt-1 ml-1 text-red-500">{`${errors.description.message}`}</small>
+                    )}
+                  </div>
+                  {/* content */}
+                  <div>
+                    <h4 className="text-sm mt-4 mb-1">Content</h4>
                     <div className="rounded-lg bg-forrestGreen border border-cultured/20">
-                      <Toolbar editor={editor} content={content} />
+                      <Toolbar
+                        editor={editor}
+                        content={content}
+                        isSubmitting={isSubmitting}
+                      />
                       <EditorContent
                         style={{ whiteSpace: "pre-line" }}
                         editor={editor}
                         className="prose prose-invert max-w-full w-full"
                       />
                     </div>
-                  </div>
-
-                  <Textarea
-                    {...register("content")}
-                    variant="bordered"
-                    label="Content"
-                    value={content}
-                    className="hidden"
-                  />
-
-                  <div className="w-fit ml-auto">
-                    <Button
-                      type="submit"
-                      size="sm"
-                      className="bg-cultured text-forrestGreen hover:bg-opacity-90 font-medium"
-                    >
-                      {isSubmitting ? "please wait..." : "Submit"}
-                    </Button>
                   </div>
                 </form>
               </ModalBody>
