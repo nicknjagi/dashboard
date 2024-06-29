@@ -3,9 +3,15 @@ import { LibraryItem, TFileLibrarySchema, TLibrarySchema } from "@/types";
 import { BASE_URL, pb } from "./utils";
 import axios from "axios";
 
-export async function getLibraryItems(type: string) {
+export async function getLibraryItems(type: string, page: number = 1, perPage: number = 10) {
   try {
-    const url = `${BASE_URL}/api/collections/library/records?sort=-created&filter=(type="${type}")`
+    let url;
+    if(type === 'FILE'){
+      url = `${BASE_URL}/api/collections/library/records?sort=-created&filter=(type="${type}")&page=${page}&perPage=6&fields=description,content,name,id`
+    }
+    else{
+      url = `${BASE_URL}/api/collections/library/records?sort=-created&filter=(type="${type}")&page=${page}&perPage=${perPage}`
+    }
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${pb.authStore.token}`
