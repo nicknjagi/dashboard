@@ -14,7 +14,7 @@ type Props = {};
 
 export default function UsersList({}: Props) {
   const [page, setPage] = useState(1);
-  const [perPage] = useState(10);
+  const [perPage, setPerPage] = useState(10);
 
   const { data, error, isLoading } = useQuery({
     queryKey: ["users", page],
