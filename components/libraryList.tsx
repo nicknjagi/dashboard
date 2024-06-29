@@ -18,7 +18,7 @@ import MusicItem from "./musicItem";
 type Props = {};
 
 export default function LibraryList({}: Props) {
-  const [mediaType, setMediaType] = useState("FILE");
+  const [mediaType, setMediaType] = useState("MUSIC");
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
 
