@@ -8,13 +8,12 @@ import {
   Modal,
   ModalBody,
   ModalContent,
-  ModalHeader,
   useDisclosure,
 } from "@nextui-org/modal";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Image from "@tiptap/extension-image";
-import { Input, Textarea } from "@nextui-org/input";
+import { Input} from "@nextui-org/input";
 import { useForm } from "react-hook-form";
 import { FileLibrarySchema, LibraryItem, TFileLibrarySchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,6 +29,7 @@ const UpdateFileForm: React.FC<Props> = ({libraryItem}) => {
   const [content, setContent] = useState<string>(libraryItem.content);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+
   const {
     register,
     handleSubmit,
