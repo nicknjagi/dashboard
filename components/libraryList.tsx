@@ -5,24 +5,26 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import Loading from "./loading";
 import { getLibraryItems } from "@/app/lib/library";
 import { File, Music, Video } from "lucide-react";
-import UpdateLibraryItemModal from "./modals/updateLibraryItemModal";
-import DeleteLibraryItemModal from "./modals/deleteLibraryItemModal";
 import { Button, ButtonGroup } from "@nextui-org/button";
 import { useState } from "react";
 import { clsx } from "clsx";
-import Content from "./content";
 import AddFileForm from "./forms/addFileForm";
 import AddToLibraryModal from "./modals/addToLibraryModal";
-import UpdateFileForm from "./forms/updateFileForm";
+import { Pagination } from "@nextui-org/pagination";
+import FileItem from "./fileItem";
+import VideoItem from "./videoItem";
+import MusicItem from "./musicItem";
 
 type Props = {};
 
 export default function LibraryList({}: Props) {
-  const [mediaType, setMediaType] = useState("MUSIC");
+  const [mediaType, setMediaType] = useState("FILE");
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
 
   const { data, error, isLoading, isFetching } = useQuery({
-    queryKey: ["libraries", mediaType],
-    queryFn: () => getLibraryItems(mediaType),
+    queryKey: ["libraries", mediaType, page],
+    queryFn: () => getLibraryItems(mediaType, page, perPage),
     placeholderData: keepPreviousData,
   });
 
@@ -44,7 +46,10 @@ export default function LibraryList({}: Props) {
                   "my-[3px] hover:text-cultured/70 bg-transparent rounded-lg",
                   { "bg-forrestGreen !rounded-lg": type === mediaType }
                 )}
-                onClick={() => setMediaType(type)}
+                onClick={() => {
+                  setMediaType(type);
+                  setPage(1);
+                }}
               >
                 {type === "VIDEO" && <Video size={15} />}
                 {type === "MUSIC" && <Music size={15} />}
@@ -55,64 +60,36 @@ export default function LibraryList({}: Props) {
             );
           })}
         </ButtonGroup>
-        {mediaType === 'FILE' ? <AddFileForm /> : <AddToLibraryModal />}
+        {mediaType === "FILE" ? <AddFileForm /> : <AddToLibraryModal />}
       </div>
       {isFetching ? (
         <Loading />
       ) : (
         <div className="mt-6 flex flex-wrap justify-center md:justify-start gap-4 md:gap-6">
-          {data.items.map((library: LibraryItem) => {
-            return library.type === "MUSIC" ? (
-              <div
-                key={library.id}
-                className="p-4 w-full md:max-w-sm border shadow-md border-cultured/20 rounded-lg bg-forrestGreen"
-              >
-                <h2 className="capitalize mb-2">
-                  {library.description.toLowerCase()}
-                </h2>
-                <audio className="" controls>
-                  <source src={library.link} type="audio/mpeg" />
-                  Your browser does not support the audio element.
-                </audio>
-                <div className="flex gap-2 mt-4">
-                  <UpdateLibraryItemModal libraryItem={library} />
-                  <DeleteLibraryItemModal libraryItem={library} />
-                </div>
-              </div>
-            ) : library.type === "VIDEO" ? (
-              <div
-                key={library.id}
-                className="p-4 w-full md:max-w-sm border shadow bg-forrestGreen border-cultured/20 rounded-xl"
-              >
-                <h3 className="text-xl capitalize">{library.name}</h3>
-                <p>{library.description}</p>
-                <video controls>
-                  <source src={library.link} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-                <div className="flex gap-2 mt-4">
-                  <UpdateLibraryItemModal libraryItem={library} />
-                  <DeleteLibraryItemModal libraryItem={library} />
-                </div>
-              </div>
+          {data.items.map((libraryItem: LibraryItem) => {
+            return libraryItem.type === "MUSIC" ? (
+              <MusicItem key={libraryItem.id} libraryItem={libraryItem} />
+            ) : libraryItem.type === "VIDEO" ? (
+              <VideoItem key={libraryItem.id} libraryItem={libraryItem} />
             ) : (
-              <div
-                key={library.id}
-                className="p-4 w-full md:max-w-sm border shadow bg-forrestGreen border-cultured/20 rounded-xl"
-              >
-                <h3 className="text-xl capitalize">{library.name || library.description}</h3>
-                <div className="flex justify-between items-center mt-4">
-                  <div className="flex gap-2">
-                    <UpdateFileForm libraryItem={library} />
-                    <DeleteLibraryItemModal libraryItem={library} />
-                  </div>
-                  <Content libraryItem={library}>{library.content}</Content>
-                </div>
-              </div>
+              <FileItem key={libraryItem.id} libraryItem={libraryItem} />
             );
           })}
         </div>
       )}
+      <div className="w-full mt-6">
+        <Pagination
+          isCompact
+          showControls
+          page={page}
+          total={data.totalPages}
+          onChange={setPage}
+          classNames={{
+            cursor:
+              "bg-forrestGreen border border-cultured/20 text-white font-bold",
+          }}
+        />
+      </div>
     </section>
   );
 }
