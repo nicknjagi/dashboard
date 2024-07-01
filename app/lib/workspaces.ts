@@ -34,6 +34,21 @@ export async function getWorkspaces() {
   }
 }
 
+export async function workspacesCount() {
+  try {
+    const url = `${BASE_URL}/api/collections/workspaces/records?fields=totalItems`
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${pb.authStore.token}`
+      }
+    })
+    return response.data
+  } catch (error) {
+    console.error('Error fetching workspace count:', error);
+    throw new Error('Error fetching workspace count')
+  }
+}
+
 export async function createWorkspace(data: TWorkspaceSchema): Promise<any> {
   const user = pb.authStore.model as User
   
