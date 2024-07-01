@@ -1,7 +1,7 @@
 import { Button } from "@nextui-org/button";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/dropdown";
 import { Menu } from "lucide-react";
-import { links } from "./sideNavbar";
+import { LinkNav, links } from "./sideNavbar";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
@@ -51,7 +51,7 @@ export default function MenuMobile({}: Props) {
                 <div className="flex flex-col gap-2 items-start md:hidden">
                   {links
                   .filter((link) => userModel && link.roles.includes(userModel.AccountType)) 
-                  .map((link, i) => {
+                  .map((link:LinkNav, i) => {
                     return (
                       <div className="w-full " key={i}>
                         <Link
