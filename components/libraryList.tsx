@@ -32,7 +32,7 @@ export default function LibraryList({}: Props) {
 
   if (isLoading) return <Loading />;
   if (error) return <p className="mt-10">Error fetching library items</p>;
-
+  
   return (
     <section className="mt-6">
       <div className="w-full flex flex-wrap gap-2 items-center justify-between">
@@ -77,7 +77,7 @@ export default function LibraryList({}: Props) {
           })}
         </div>
       )}
-      <div className="w-full mt-6">
+      {((data?.totalItems > 10 && mediaType !== 'FILE') || (data?.totalItems > 6 && mediaType === 'FILE')) && <div className="w-full mt-6">
         <Pagination
           isCompact
           showControls
@@ -89,7 +89,7 @@ export default function LibraryList({}: Props) {
               "bg-forrestGreen border border-cultured/20 text-white font-bold",
           }}
         />
-      </div>
+      </div>}
     </section>
   );
 }

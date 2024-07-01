@@ -82,7 +82,7 @@ export default function FacilitatorsList({}: Props) {
       ) : (
         <p className="mt-10">No users to display.</p>
       )}
-      <div className="w-full flex justify-start mt-6">
+      {data?.totalItems > 10 && <div className="w-full flex justify-start mt-6">
         <Pagination
           isCompact
           showControls
@@ -94,7 +94,7 @@ export default function FacilitatorsList({}: Props) {
               "bg-forrestGreen border border-cultured/20 text-white font-bold",
           }}
         />
-      </div>
+      </div>}
     </div>
   );
 }
