@@ -12,8 +12,9 @@ import { useParams } from "next/navigation";
 import { DatePicker } from "@nextui-org/date-picker";
 import { now, getLocalTimeZone } from "@internationalized/date";
 import { createSession } from "@/app/lib/sessions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
+import { generateJitsiLink } from "@/app/lib/utils";
 
 type Props = {
   onClose: () => void;
@@ -31,6 +32,11 @@ export const sessionTypes = [
 const CreateSessionForm: React.FC<Props> = ({ onClose }) => {
   const { id } = useParams();
   const [selectedDate, setSelectedDate] = useState(now(getLocalTimeZone()));
+  const [generatedLink, setGeneratedLink] = useState(generateJitsiLink());
+
+  useEffect(() => {
+    setGeneratedLink(generateJitsiLink());
+  }, []);
 
   const {
     register,
@@ -42,6 +48,7 @@ const CreateSessionForm: React.FC<Props> = ({ onClose }) => {
     defaultValues: {
       workspace: id as string,
       date: selectedDate.toString(),
+      link_to_session: generatedLink,
     },
   });
 
@@ -116,16 +123,6 @@ const CreateSessionForm: React.FC<Props> = ({ onClose }) => {
           )}
         </div>
       </div>
-
-      <Input
-        {...register("link_to_session")}
-        type="text"
-        variant={"underlined"}
-        label="Link to session"
-      />
-      {errors.link_to_session && (
-        <small className="mt-1 ml-1 text-red-500">{`${errors.link_to_session.message}`}</small>
-      )}
 
       <div className="flex justify-end">
         <Button
