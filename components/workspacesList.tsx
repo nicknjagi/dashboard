@@ -31,10 +31,10 @@ export default function WorkspacesList({}: Props) {
 
   return (
     <section className="mt-6 flex flex-wrap justify-center md:justify-start gap-4 md:gap-6">
-      {data.items.map((workspace: Workspace) => {
+      {data.items.map((workspace: Workspace,i:number) => {
         return (
           <div
-            key={workspace.id}
+            key={`${workspace.id}-${i}`}
             className="pt-4 w-full md:max-w-sm border shadow bg-forrestGreen border-cultured/20 rounded-xl"
           >
             <h2 className="mb-6 text-xl px-4">{workspace.name}</h2>
@@ -43,7 +43,7 @@ export default function WorkspacesList({}: Props) {
               <div className="flex gap-1 items-center">
                 <UsersRound size={18} />
                 <span className="text-sm">
-                  Users <Chip size="sm">{workspace.users.length}</Chip>
+                  Users <Chip size="sm">{workspace?.users?.length}</Chip>
                 </span>
               </div>
               {workspace.active ? (
@@ -62,9 +62,9 @@ export default function WorkspacesList({}: Props) {
               </div>}
               <Link
                 className="flex items-center text-sm text-cyan-400 hover:text-cyan-400/80"
-                href={`/workspaces/${workspace.id}/sessions`}
+                href={`/workspaces/${workspace.id}`}
               >
-                <span>sessions </span>
+                <span>view </span>
                 <ChevronRight size={16} />
               </Link>
             </div>
