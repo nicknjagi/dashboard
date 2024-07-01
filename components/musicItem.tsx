@@ -8,7 +8,7 @@ type Props = {
 
 export default function MusicItem({ libraryItem }: Props) {
   return (
-    <div className="p-4 w-full md:max-w-sm border shadow-md border-cultured/20 rounded-lg bg-forrestGreen">
+    <div className="p-4 w-full md:max-w-[333px] border shadow-md border-cultured/20 rounded-lg bg-forrestGreen">
       <h2 className="capitalize mb-2">
         {libraryItem.description.toLowerCase()}
       </h2>
