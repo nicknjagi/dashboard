@@ -10,7 +10,7 @@ type Props = {
 
 export default function FileItem({ libraryItem }: Props) {
   return (
-    <div className="p-4 w-full md:max-w-xl border shadow bg-forrestGreen border-cultured/20 rounded-xl">
+    <div className="p-4 w-full md:max-w-[480px] border shadow bg-forrestGreen border-cultured/20 rounded-xl">
       <div className="overflow-hidden h-56 text-ellipsis prose prose-invert">{parse(libraryItem.content)}</div>
       <div className="flex justify-between items-center mt-4">
         <div className="flex gap-2">
