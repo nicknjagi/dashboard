@@ -24,7 +24,7 @@ import { User } from "@/types";
 
 type Props = {};
 
-type LinkNav = {
+export type LinkNav = {
   title: string;
   href: string;
   icon: LucideIcon;
@@ -95,7 +95,7 @@ export default function SideNavbar({}: Props) {
   return (
     <nav
       className={clsx(
-        `flex md:flex-col justify-between md:justify-normal p-4 w-full transition-all duration-300 origin-left bg-forrestGreen md:h-screen overflow-y-auto ${
+        `flex md:flex-col justify-between md:justify-normal p-4 w-full transition-all duration-200 origin-left bg-forrestGreen md:h-screen overflow-y-auto ${
           isCollapsed ? "md:w-fit" : " md:px-6 md:w-full"
         } md:max-w-[280px] border-b md:border-r border-gold/50 relative`
       )}
@@ -151,10 +151,10 @@ export default function SideNavbar({}: Props) {
                     href={link.href}
                     variant="light"
                     className={clsx(
-                      "flex md:justify-start gap-3 min-w-6 rounded-lg",
+                      "flex md:justify-start gap-3 min-w-6 rounded-lg transition-all duration-0",
                       {
                         "bg-cultured data-[hover=true]:bg-cultured text-forrestGreen cursor-default":
-                          pathname === link.href || (pathname.includes('/session') && link.title === 'Workspaces'),
+                          pathname === link.href || (pathname.includes('/workspaces') && link.title === 'Workspaces'),
                         "max-w-fit": isCollapsed,
                       }
                     )}
