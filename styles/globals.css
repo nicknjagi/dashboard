@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.card{
+  @apply border shadow bg-forrestGreen border-cultured/10 rounded-xl
+}
