@@ -110,16 +110,6 @@ const UpdateSessionForm: React.FC<Props> = ({ session, onClose }) => {
         </div>
       </div>
 
-      <Input
-        {...register("link_to_session")}
-        type="text"
-        variant={"underlined"}
-        label="Link to session"
-      />
-      {errors.link_to_session && (
-        <small className="mt-1 ml-1 text-red-500">{`${errors.link_to_session.message}`}</small>
-      )}
-
       <div className="flex justify-end">
         <Button
           type="submit"
