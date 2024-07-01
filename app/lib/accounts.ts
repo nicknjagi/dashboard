@@ -40,6 +40,21 @@ export async function getAccounts(page: number = 1, perPage: number = 10) {
   }
 }
 
+export async function activeUserCount() {
+  try {
+    const url = `${BASE_URL}/api/collections/accounts/records?filter=(active=true)&fields=totalItems`
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${pb.authStore.token}`
+      }
+    })
+    return response.data
+  } catch (error) {
+    console.error('Error fetching active user count:', error);
+    throw new Error('Error fetching active user count')
+  }
+}
+
 export async function updateAccount(data: Account) {
   const user = pb.authStore.model as User
 
