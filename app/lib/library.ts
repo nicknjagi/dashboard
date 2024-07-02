@@ -7,7 +7,7 @@ export async function getLibraryItems(type: string, page: number = 1, perPage: n
   try {
     let url;
     if(type === 'FILE'){
-      url = `${BASE_URL}/api/collections/library/records?sort=-created&filter=(type="${type}")&page=${page}&perPage=6&fields=description,content,name,id`
+      url = `${BASE_URL}/api/collections/library/records?sort=-created&filter=(type="${type}")&page=${page}&perPage=6&fields=description,content,Name,id`
     }
     else{
       url = `${BASE_URL}/api/collections/library/records?sort=-created&filter=(type="${type}")&page=${page}&perPage=${perPage}`
