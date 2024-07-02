@@ -48,7 +48,7 @@ export default function Content({ children, libraryItem }: Props) {
           {(onClose) => (
             <>
               <ModalHeader>
-                <h2>{libraryItem.description}</h2>
+                <h2 className="text-xl font-semibold capitalize">{libraryItem.Name}</h2>
               </ModalHeader>
               <ModalBody className="prose prose-invert max-w-full w-full">{parse(children)}</ModalBody>
               <ModalFooter>

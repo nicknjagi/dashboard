@@ -9,7 +9,9 @@ type Props = {
 export default function VideoItem({ libraryItem }: Props) {
   return (
     <div className="p-4 w-full md:max-w-sm border shadow bg-forrestGreen border-cultured/20 rounded-xl">
-      <h3 className="text-xl capitalize">{libraryItem.name}</h3>
+      <h2 className="capitalize mb-2">
+        {libraryItem.Name}
+      </h2>
       <p>{libraryItem.description}</p>
       <video controls>
         <source src={libraryItem.link} type="video/mp4" />

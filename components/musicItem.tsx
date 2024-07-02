@@ -10,7 +10,7 @@ export default function MusicItem({ libraryItem }: Props) {
   return (
     <div className="p-4 w-full md:max-w-[333px] border shadow-md border-cultured/20 rounded-lg bg-forrestGreen">
       <h2 className="capitalize mb-2">
-        {libraryItem.description.toLowerCase()}
+        {libraryItem.Name}
       </h2>
       <audio className="" controls>
         <source src={libraryItem.link} type="audio/mpeg" />
