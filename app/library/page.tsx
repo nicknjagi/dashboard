@@ -1,5 +1,4 @@
 import LibraryList from "@/components/libraryList";
-import AddToLibraryModal from "@/components/modals/addToLibraryModal";
 
 type Props = {};
 
