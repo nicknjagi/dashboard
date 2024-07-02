@@ -120,7 +120,7 @@ const AddFileForm: React.FC<Props> = () => {
                   {/* name */}
                   <div>
                     <Input
-                      {...register("name")}
+                      {...register("Name")}
                       type="text"
                       variant={"underlined"}
                       classNames={{
@@ -128,8 +128,8 @@ const AddFileForm: React.FC<Props> = () => {
                       }}
                       label="Title"
                     />
-                    {errors.name && (
-                      <small className="mt-1 ml-1 text-red-500">{`${errors.name.message}`}</small>
+                    {errors.Name && (
+                      <small className="mt-1 ml-1 text-red-500">{`${errors.Name.message}`}</small>
                     )}
                   </div>
                     {/* description */}

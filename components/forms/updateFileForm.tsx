@@ -119,7 +119,7 @@ const UpdateFileForm: React.FC<Props> = ({libraryItem}) => {
                   {/* name */}
                   <div>
                     <Input
-                      {...register("name")}
+                      {...register("Name")}
                       type="text"
                       variant={"underlined"}
                       classNames={{
@@ -127,8 +127,8 @@ const UpdateFileForm: React.FC<Props> = ({libraryItem}) => {
                       }}
                       label="Title"
                     />
-                    {errors.name && (
-                      <small className="mt-1 ml-1 text-red-500">{`${errors.name.message}`}</small>
+                    {errors.Name && (
+                      <small className="mt-1 ml-1 text-red-500">{`${errors.Name.message}`}</small>
                     )}
                   </div>
                   {/* description */}

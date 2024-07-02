@@ -62,7 +62,7 @@ const AddToLibraryForm: React.FC<Props> = ({ onClose }) => {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 pt-2">
       <div>
         <Input
-          {...register("name")}
+          {...register("Name")}
           type="text"
           variant={"bordered"}
           classNames={{
@@ -70,8 +70,8 @@ const AddToLibraryForm: React.FC<Props> = ({ onClose }) => {
           }}
           label="Name"
         />
-        {errors.name && (
-          <small className="mt-1 ml-1 text-red-500">{`${errors.name.message}`}</small>
+        {errors.Name && (
+          <small className="mt-1 ml-1 text-red-500">{`${errors.Name.message}`}</small>
         )}
       </div>
 
