@@ -20,7 +20,7 @@ export default function SendTokenModal({}: Props) {
       <Button
         size="sm"
         onPress={onOpen}
-        className="bg-cultured text-forrestGreen hover:bg-opacity-90 font-medium"
+        className="btn"
       >
         Send Invite
       </Button>
