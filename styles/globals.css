@@ -5,3 +5,7 @@
 .card{
   @apply border shadow bg-forrestGreen border-cultured/10 rounded-xl
 }
+
+.btn{
+  @apply bg-cultured text-forrestGreen hover:bg-opacity-90 font-medium
+}
