@@ -1,5 +1,5 @@
 import { ClientResponseError } from "pocketbase";
-import {SVGProps} from "react";
+import { SVGProps } from "react";
 import { z } from "zod";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
@@ -15,8 +15,8 @@ export const SignUpSchema = z.object({
   accountType: z.string().default("FACILITATOR"),
   avatar: z.optional(z.any())
 }).refine(data => data.password === data.passwordConfirm, {
-  message:"Passwords must match",
-  path:["passwordConfirm"]
+  message: "Passwords must match",
+  path: ["passwordConfirm"]
 })
 
 export type TSignUpSchema = z.infer<typeof SignUpSchema>
@@ -46,6 +46,48 @@ export type User = {
   avatar: string;
   AccountType: 'ADMIN' | 'FACILITATOR'
 };
+export interface ClerkUser {
+  id: string;
+  object: string;
+  username: string | null;
+  first_name: string;
+  last_name: string;
+  image_url: string;
+  has_image: boolean;
+  primary_email_address_id: string;
+  primary_phone_number_id: string | null;
+  primary_web3_wallet_id: string | null;
+  password_enabled: boolean;
+  two_factor_enabled: boolean;
+  totp_enabled: boolean;
+  backup_code_enabled: boolean;
+  email_addresses: EmailAddress[];
+  public_metadata: Record<string, any>;
+  private_metadata: Record<string, any>;
+  unsafe_metadata: Record<string, any>;
+  external_id: string | null;
+  last_sign_in_at: number;
+  banned: boolean;
+  locked: boolean;
+  lockout_expires_in_seconds: number | null;
+  verification_attempts_remaining: number;
+  created_at: number;
+  updated_at: number;
+  delete_self_enabled: boolean;
+  create_organization_enabled: boolean;
+  last_active_at: number;
+  mfa_enabled_at: number | null;
+  mfa_disabled_at: number | null;
+  profile_image_url: string;
+}
+interface EmailAddress {
+  id: string;
+  object: string;
+  email_address: string;
+  reserved: boolean;
+  created_at: number;
+  updated_at: number;
+}
 
 export type Account = {
   id: string;
@@ -55,7 +97,7 @@ export type Account = {
   updated: string; // ISO 8601 date string
   userId: string;
   active: boolean;
-  subscription_type: 'STUDENT' | 'PRODUCTIVITY'| 'BLENDED'
+  subscription_type: 'STUDENT' | 'PRODUCTIVITY' | 'BLENDED'
   valid_until: string; // ISO 8601 date string
   workspace_theme: string; // Assuming this is a relation record ID
   sub_code: string;
@@ -67,7 +109,7 @@ export const AccountSchema = z.object({
 })
 
 export const LibrarySchema = z.object({
-  name: z.string().min(2, "Name is required"),
+  Name: z.string().min(2, "Name is required"),
   description: z.string(),
   type: z.string().min(2, "Please choose a type"),
   link: z.string(),
@@ -77,7 +119,7 @@ export const LibrarySchema = z.object({
 export type TLibrarySchema = z.infer<typeof LibrarySchema>
 
 export const FileLibrarySchema = z.object({
-  name: z.string().min(2, "Title is required"),
+  Name: z.string().min(2, "Title is required"),
   description: z.string(),
   content: z.string(),
 })
@@ -90,10 +132,10 @@ export type LibraryItem = {
   collectionName: string;
   created: string; // ISO 8601 date string
   updated: string; // ISO 8601 date string
-  name: string;
+  Name: string;
   description: string;
   link: string;
-  type: 'VIDEO' | 'MUSIC'| 'FILE'
+  type: 'VIDEO' | 'MUSIC' | 'FILE'
   thumbnail: string;
   content: string; // Assuming this is rich text format
 };
