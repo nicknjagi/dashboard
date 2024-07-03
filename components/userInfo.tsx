@@ -3,10 +3,8 @@
 import { getUserData } from "@/app/lib/users";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
-import { Tooltip } from "@nextui-org/tooltip";
 import { User } from "@nextui-org/user";
 import { useQuery } from "@tanstack/react-query";
-import { BadgeCheck, CircleAlert } from "lucide-react";
 import { useState } from "react";
 
 export function UserInfo() {
@@ -28,7 +26,6 @@ export function UserInfo() {
       refetch();
     }
   };
-console.log(data);
 
   return (
     <div>
