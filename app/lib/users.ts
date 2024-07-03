@@ -14,3 +14,18 @@ export async function fetchUsers(page: number = 1, perPage: number = 10) {
     throw new Error('Error fetching users')
   }
 }
+
+export async function getUserData(userId: string) {
+  try {
+    const response = await axios.get(`/api/get-user/${userId}?timestamp=${new Date().getTime()}`, {
+      headers: {
+        'Cache-Control': 'no-cache',
+        Authorization: `Bearer ${pb.authStore.token}`
+      },
+    })
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw new Error('Error fetching user data');
+  }
+}
