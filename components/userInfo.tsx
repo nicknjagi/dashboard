@@ -44,7 +44,7 @@ export function UserInfo() {
       </form>
 
       {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}      
+      {error && <p>{error.message}</p>}      
       {data?.user && (
         <div>
           <h1>User Data</h1>

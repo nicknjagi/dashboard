@@ -25,7 +25,17 @@ export async function getUserData(userId: string) {
     })
     return response.data;
   } catch (error) {
-    console.error('Error fetching user data:', error);
-    throw new Error('Error fetching user data');
+    if (axios.isAxiosError(error)) {
+      console.error('Error response data:', error.response?.data.error);
+      if(error.response?.status === 404){
+        throw new Error('User not found')
+      } else if(error.response?.status === 401){
+        throw new Error('Unauthorized')
+      }
+      throw new Error(error.response?.data)
+    } else {
+      console.error('Error message:', error);
+      throw new Error('Error fetching user data');
+    }
   }
 }
