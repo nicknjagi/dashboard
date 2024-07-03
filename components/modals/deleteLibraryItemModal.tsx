@@ -54,7 +54,7 @@ export default function DeleteLibraryItemModal({ libraryItem }: Props) {
             <>
               <ModalHeader className="flex flex-col gap-1">
                 <h2 className="text-xl">
-                  Are you sure you want to delete {libraryItem.name}?
+                  Are you sure you want to delete {libraryItem.Name}?
                 </h2>
               </ModalHeader>
               <ModalBody>
