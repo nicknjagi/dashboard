@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { pb } from '@/app/lib/utils'; 
 
 export async function GET(req: NextRequest) {
   try {
