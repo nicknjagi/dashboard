@@ -46,6 +46,7 @@ export type User = {
   avatar: string;
   AccountType: 'ADMIN' | 'FACILITATOR'
 };
+
 export interface ClerkUser {
   id: string;
   object: string;
@@ -62,6 +63,11 @@ export interface ClerkUser {
   totp_enabled: boolean;
   backup_code_enabled: boolean;
   email_addresses: EmailAddress[];
+  phone_numbers: any[]; 
+  web3_wallets: any[]; 
+  passkeys: any[]; 
+  external_accounts: ExternalAccount[];
+  saml_accounts: any[]; 
   public_metadata: Record<string, any>;
   private_metadata: Record<string, any>;
   unsafe_metadata: Record<string, any>;
@@ -80,6 +86,7 @@ export interface ClerkUser {
   mfa_disabled_at: number | null;
   profile_image_url: string;
 }
+
 interface EmailAddress {
   id: string;
   object: string;
@@ -87,6 +94,50 @@ interface EmailAddress {
   reserved: boolean;
   created_at: number;
   updated_at: number;
+}
+
+export interface EmailVerification {
+  status: string;
+  strategy: string;
+  attempts: number | null;
+  expire_at: number | null;
+}
+
+export interface LinkedAccount {
+  type: string;
+  id: string;
+}
+
+
+export interface ExternalAccountVerification {
+  status: string;
+  strategy: string;
+  attempts: number | null;
+  expire_at: number | null;
+  error: ExternalAccountError;
+}
+
+export interface ExternalAccountError {
+  code: string;
+  message: string;
+  long_message: string;
+}
+
+export interface ExternalAccount {
+  object: string;
+  id: string;
+  google_id: string;
+  approved_scopes: string;
+  email_address: string;
+  given_name: string;
+  family_name: string;
+  picture: string;
+  username: string | null;
+  public_metadata: Record<string, any>;
+  label: string | null;
+  created_at: number;
+  updated_at: number;
+  verification: ExternalAccountVerification;
 }
 
 export type Account = {
