@@ -9,6 +9,7 @@ import { DateTime } from "luxon";
 import UpdateAccountModal from "./modals/updateAccountModal";
 import { Pagination } from "@nextui-org/pagination";
 import { useState } from "react";
+import UserInfo from "./userInfo";
 
 type Props = {};
 
@@ -35,59 +36,61 @@ export default function AccountsList({}: Props) {
       {data.items.length > 0 ? (
         data.items.map((account: Account) => (
           <div
-            key={account.userId}
-            className="flex justify-between p-4 w-full md:max-w-md border border-cultured/10 rounded-lg bg-forrestGreen"
+            key={account.id}
+            className="flex flex-col justify-between p-4 w-full md:max-w-md card"
           >
-            <div>
-              <h2 className="text-lg font-semibold">{account.userId}</h2>
-              <p className="mt-1 text-sm text-cultured/70">
-                Subscription Type: {account.subscription_type}
-              </p>
-              <div className="mt-1 text-sm text-cultured/70">
-                <span>Status:</span>{" "}
-                {account.active ? (
-                  <Chip
-                    size="sm"
-                    color="success"
-                    classNames={{
-                      base: "px-1 scale-90",
-                      content: "text-black font-semibold"
-                    }}
-                  >
-                    Active
-                  </Chip>
-                ) : (
-                  <Chip size="sm">Paused</Chip>
-                )}
+            <div className="flex justify-between">
+              <UserInfo userId={account.userId} />
+              <div>
+                <UpdateAccountModal account={account} />
               </div>
-              <p className="mt-1 text-sm text-cultured/70">
-                Valid Until:{" "}
-                {DateTime.fromISO(account.valid_until.replace(" ", "T"), {
-                  zone: "utc",
-                }).toFormat("dd/MM/yyyy hh:mm a")}
+            </div>
+            <div className="flex justify-between mt-2 pt-2 text-sm text-cultured/70 border-t border-cultured/15">
+              <p className="flex flex-wrap gap-1 text-sm text-cultured/70">
+                <span>Subscription: {" "} </span>
+                <span>{account.subscription_type}</span>
               </p>
+              {account.active ? (
+                <Chip
+                  size="sm"
+                  color="success"
+                  classNames={{
+                    base: "px-1 scale-90",
+                    content: "text-black font-semibold",
+                  }}
+                >
+                  Active
+                </Chip>
+              ) : (
+                <Chip size="sm">Paused</Chip>
+              )}
             </div>
-            <div>
-              <UpdateAccountModal account={account} />
-            </div>
+            <p className="mt-1 text-sm text-cultured/70">
+              Valid Until:{" "}
+              {DateTime.fromISO(account.valid_until.replace(" ", "T"), {
+                zone: "utc",
+              }).toFormat("dd/MM/yyyy hh:mm a")}
+            </p>
           </div>
         ))
       ) : (
         <p className="mt-10">No accounts to display.</p>
       )}
-      {data?.totalItems > 10 && <div className="w-full flex justify-start mt-6">
-        <Pagination
-          isCompact
-          showControls
-          page={page}
-          total={data.totalPages}
-          onChange={setPage}
-          classNames={{
-            cursor:
-              "bg-forrestGreen border border-cultured/20 text-white font-bold",
-          }}
-        />
-      </div>}
+      {data?.totalItems > 10 && (
+        <div className="w-full flex justify-start mt-6">
+          <Pagination
+            isCompact
+            showControls
+            page={page}
+            total={data.totalPages}
+            onChange={setPage}
+            classNames={{
+              cursor:
+                "bg-forrestGreen border border-cultured/20 text-white font-bold",
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }
