@@ -24,6 +24,7 @@ export default function UpdateAccountModal({ account }: Props) {
         size="sm"
         onClick={onOpen}
         variant="bordered"
+        className="border-2 border-cultured/20 hover:border-cultured/50"
       >
         <span>update</span>
       </Button>
