@@ -7,6 +7,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchTotalUsers, fetchUsers } from "@/app/lib/users";
 import { Pagination } from "@nextui-org/pagination";
 import { useState } from "react";
+import AddToWorkspaceModal from "./modals/addToWorkspaceModal";
 
 type Props = {};
 
@@ -51,7 +52,6 @@ export default function UsersList({}: Props) {
             key={user.id}
             className="p-4 w-full md:max-w-sm border border-cultured/10 rounded-lg bg-forrestGreen"
           >
-            <div className="flex items-center gap-4">
               <User
                 avatarProps={{
                   radius: "lg",
@@ -62,7 +62,9 @@ export default function UsersList({}: Props) {
               >
                 {user.email_addresses[0].email_address}
               </User>
-            </div>
+              <div className="w-fit ">
+                <AddToWorkspaceModal userId={user.id}/>
+              </div>
           </div>
         ))
       ) : (
