@@ -107,20 +107,62 @@ export async function updateWorkspace(data: Workspace): Promise<any> {
     throw new Error('Error updating account')
   }
 }
-export async function addToWorkspace(userId: string): Promise<any> {
+
+export async function addToWorkspace(accountId: string, workspaceId: string): Promise<any> {
   try {
-    const url = `/api/add-to-workspace`
-    const response = await axios.patch(url, {userId}, {
+    // Fetch the current workspace data
+    const getUrl = `${BASE_URL}/api/collections/workspaces/records/${workspaceId}?fields=users`;
+    const getResponse = await axios.get(getUrl, {
       headers: {
         Authorization: `Bearer ${pb.authStore.token}`
       }
-    })
-    // console.log(userId);
+    });
+    const {users} = getResponse.data;
     
-    // return response.data
+    // Append the new accountId to the users array
+    const updatedUsers = [...users, accountId];
+
+    // Update the workspace with the new users array
+    const patchUrl = `${BASE_URL}/api/collections/workspaces/records/${workspaceId}`;
+    const patchResponse = await axios.patch(patchUrl, { users: updatedUsers }, {
+      headers: {
+        Authorization: `Bearer ${pb.authStore.token}`
+      }
+    });
+
+    return patchResponse.data;
   } catch (error) {
     console.error('Error updating account:', error);
     throw new Error('Error updating account')
+  }
+}
+
+export async function removeFromWorkspace(accountId: string, workspaceId: string): Promise<any> {
+  try {
+    // Fetch the current workspace data
+    const getUrl = `${BASE_URL}/api/collections/workspaces/records/${workspaceId}?fields=users`;
+    const getResponse = await axios.get(getUrl, {
+      headers: {
+        Authorization: `Bearer ${pb.authStore.token}`
+      }
+    });
+    const { users } = getResponse.data;
+    
+    // Remove the accountId from the users array
+    const updatedUsers = users.filter((userId: string) => userId !== accountId);
+
+    // Update the workspace with the updated users array
+    const patchUrl = `${BASE_URL}/api/collections/workspaces/records/${workspaceId}`;
+    const patchResponse = await axios.patch(patchUrl, { users: updatedUsers }, {
+      headers: {
+        Authorization: `Bearer ${pb.authStore.token}`
+      }
+    });
+
+    return patchResponse.data;
+  } catch (error) {
+    console.error('Error removing user from workspace:', error);
+    throw new Error('Error removing user from workspace');
   }
 }
 
@@ -136,5 +178,21 @@ export async function deleteWorkspace(id: string) {
   } catch (error) {
     console.error('Error deleting workspace:', error);
     throw new Error('Error deleting workspace')
+  }
+}
+
+export async function getWorkspaceByAccountId(accountId: string): Promise<any> {
+  try {
+    const url = `${BASE_URL}/api/collections/workspaces/records?filter=(users~"${accountId}")&fields=name,id`;
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${pb.authStore.token}`,
+      },
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching workspace:', error);
+    throw new Error('Error fetching workspace');
   }
 }
