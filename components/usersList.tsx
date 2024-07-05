@@ -7,7 +7,6 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchTotalUsers, fetchUsers } from "@/app/lib/users";
 import { Pagination } from "@nextui-org/pagination";
 import { useState } from "react";
-import AddToWorkspaceModal from "./modals/addToWorkspaceModal";
 
 type Props = {};
 
@@ -62,9 +61,6 @@ export default function UsersList({}: Props) {
               >
                 {user.email_addresses[0].email_address}
               </User>
-              <div className="w-fit ">
-                <AddToWorkspaceModal userId={user.id}/>
-              </div>
           </div>
         ))
       ) : (
