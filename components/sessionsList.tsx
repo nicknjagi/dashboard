@@ -1,6 +1,6 @@
 "use client";
 
-import { Session, User } from "@/types";
+import { Session, User, Workspace } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "./loading";
 import { useEffect, useState } from "react";
@@ -11,22 +11,19 @@ import { DateTime } from "luxon";
 import { useParams } from "next/navigation";
 import UpdateSessionModal from "./modals/updateSessionModal";
 import DeleteSessionModal from "./modals/deleteSessionModal";
-import { getWorkspace } from "@/app/lib/workspaces";
 import Link from "next/link";
 import CreateSessionModal from "./modals/createSessionModal";
 
-type Props = {};
+type Props = {
+  workspace: Workspace
+};
 
-export default function SessionsList({}: Props) {
+export default function SessionsList({workspace}:Props) {
   const { id } = useParams();
   const [userModel, setUserModel] = useState<User | null>(null);
   const { data, error, isLoading } = useQuery({
     queryKey: ["sessions"],
     queryFn: () => getSessions(id as string),
-  });
-  const { data: workspace } = useQuery({
-    queryKey: ["getWorkspace"],
-    queryFn: () => getWorkspace(id as string),
   });
 
   useEffect(() => {
