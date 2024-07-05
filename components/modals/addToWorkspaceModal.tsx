@@ -14,16 +14,20 @@ import Loading from "../loading";
 import { Select, SelectItem } from "@nextui-org/select";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { createLibraryItem } from "@/app/lib/library";
 
 type Props = {
-  userId: string;
+  accountId: string;
 };
 
-export default function AddToWorkspaceModal({ userId }: Props) {
+type AddToWorkspaceInput = {
+  accountId: string;
+  workspaceId: string;
+};
+
+export default function AddToWorkspaceModal({ accountId }: Props) {
   const [workspaceId, setWorkspaceId] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const { data, error, isLoading } = useQuery({
     queryKey: ["workspaceNames"],
     queryFn: getWorkspaceNames,
@@ -31,11 +35,13 @@ export default function AddToWorkspaceModal({ userId }: Props) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: addToWorkspace,
+    mutationFn: ({ accountId, workspaceId }: AddToWorkspaceInput) =>
+      addToWorkspace(accountId, workspaceId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["libraries"] }); 
+      queryClient.invalidateQueries({ queryKey: ["workspaceForAccount"] });
       // toast.success("Added to workspace successfully");
       setIsSubmitting(false);
+      onClose();
     },
     onError: (error: any) => {
       console.error(error);
@@ -44,10 +50,14 @@ export default function AddToWorkspaceModal({ userId }: Props) {
     },
   });
 
+  const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setWorkspaceId(e.target.value);
+  };
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setIsSubmitting(true)
-    mutation.mutate(userId)
+    setIsSubmitting(true);
+    mutation.mutate({ accountId, workspaceId });
   }
 
   return (
@@ -79,6 +89,7 @@ export default function AddToWorkspaceModal({ userId }: Props) {
                 {error && <p>Something went wrong.</p>}
                 <form onSubmit={handleSubmit} className="flex gap-4 items-end">
                   <Select
+                    isRequired
                     items={data?.items}
                     label="Choose workspace"
                     className="block max-w-[200px]"
@@ -88,6 +99,7 @@ export default function AddToWorkspaceModal({ userId }: Props) {
                     }}
                     variant="bordered"
                     size="sm"
+                    onChange={handleSelectionChange}
                   >
                     {(item: { id: string; name: string }) => (
                       <SelectItem key={item.id}>{item.name}</SelectItem>
@@ -98,8 +110,9 @@ export default function AddToWorkspaceModal({ userId }: Props) {
                     size="lg"
                     className="btn"
                     disabled={isSubmitting}
+                    isLoading={isSubmitting}
                   >
-                    {isSubmitting ? "please wait..." : "+ Add"}
+                    {isSubmitting ? "adding..." : "+ Add"}
                   </Button>
                 </form>
                 {data?.items && <div></div>}
