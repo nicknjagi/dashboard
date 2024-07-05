@@ -6,7 +6,7 @@ export async function GET(request: NextRequest, { params }: { params: { userId: 
     return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
   }
   try {
-    const response = await fetch(`https://api.clerk.dev/v1/users/${userId}`, {
+    const response = await fetch(`https://api.clerk.com/v1/users/${userId}`, {
       headers: {
         Authorization: `Bearer ${process.env.CLERK_API_KEY!}`
       }
