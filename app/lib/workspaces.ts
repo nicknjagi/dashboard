@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 export async function getWorkspace(id: string) {
   try {
-    const url = `${BASE_URL}/api/collections/workspaces/records/${id}`
+    const url = `${BASE_URL}/api/collections/workspaces/records/${id}?expand=users`
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${pb.authStore.token}`
@@ -31,6 +31,21 @@ export async function getWorkspaces() {
   } catch (error) {
     console.error('Error fetching workspaces:', error);
     throw new Error('Error fetching workspaces')
+  }
+}
+
+export async function getWorkspaceNames() {
+  try {
+    const url = `${BASE_URL}/api/collections/workspaces/records?sort=-created&fields=id,name`
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${pb.authStore.token}`
+      }
+    })
+    return response.data
+  } catch (error) {
+    console.error('Error fetching workspace names:', error);
+    throw new Error('Error fetching workspace names')
   }
 }
 
@@ -87,6 +102,22 @@ export async function updateWorkspace(data: Workspace): Promise<any> {
       }
     })
     return response.data
+  } catch (error) {
+    console.error('Error updating account:', error);
+    throw new Error('Error updating account')
+  }
+}
+export async function addToWorkspace(userId: string): Promise<any> {
+  try {
+    const url = `/api/add-to-workspace`
+    const response = await axios.patch(url, {userId}, {
+      headers: {
+        Authorization: `Bearer ${pb.authStore.token}`
+      }
+    })
+    // console.log(userId);
+    
+    // return response.data
   } catch (error) {
     console.error('Error updating account:', error);
     throw new Error('Error updating account')
