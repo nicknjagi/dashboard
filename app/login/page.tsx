@@ -99,10 +99,11 @@ export default function Login({}: Props) {
         <Button
           type="submit"
           radius="sm"
-          className="mt-2 bg-cultured text-forrestGreen hover:bg-opacity-90 font-medium uppercase"
+          className="mt-2 bg-cultured text-forrestGreen hover:bg-opacity-90 font-medium"
           disabled={isSubmitting}
+          isLoading={isSubmitting}
         >
-          {isSubmitting ? "please wait..." : "Login"}
+          {isSubmitting ? "logging in..." : "Login"}
         </Button>
       </form>
     </div>
