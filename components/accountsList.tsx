@@ -40,14 +40,16 @@ export default function AccountsList({}: Props) {
             className="flex flex-col justify-between p-4 w-full md:max-w-md card"
           >
             <div className="flex justify-between">
-              <UserInfo userId={account.userId} />
+              <div>
+                <UserInfo userId={account.userId} accountId={account.id}/>
+              </div>
               <div>
                 <UpdateAccountModal account={account} />
               </div>
             </div>
             <div className="flex justify-between mt-2 pt-2 text-sm text-cultured/70 border-t border-cultured/15">
               <p className="flex flex-wrap gap-1 text-sm text-cultured/70">
-                <span>Subscription: {" "} </span>
+                <span>Subscription: </span>
                 <span>{account.subscription_type}</span>
               </p>
               {account.active ? (
