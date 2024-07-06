@@ -70,7 +70,7 @@ export const links: LinkNav[] = [
   }
 ];
 
-export const hideRoutes: string[] = ["/create-account", "/login"];
+export const hideRoutes: string[] = ["/create-account", "/login", "/validate-token"];
 
 export default function SideNavbar({}: Props) {
   const [isCollapsed, setIsCollapsed] = useState(false);  
