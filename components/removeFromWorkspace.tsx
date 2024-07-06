@@ -18,7 +18,8 @@ export default function RemoveFromWorkspace({ accountId, workspaceDetails }: Pro
   const mutation = useMutation({
     mutationFn: () => removeFromWorkspace(accountId, workspaceDetails.id),
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ["workspaceForAccount"]});
+      queryClient.invalidateQueries({queryKey: ["workspaceForAccount"]}),
+      queryClient.invalidateQueries({queryKey: ["getWorkspace"]})
       setIsSubmitting(false);
     },
     onError: (error: any) => {
