@@ -21,7 +21,7 @@ type EmailProps = {
 export function generateHtml(to: string, token: string) {
   const html = render(
     <Email
-      url={`${process.env.NEXT_PUBLIC_URL}/api/validate-token?email=${to}&token=${token}`}
+      url={`${process.env.NEXT_PUBLIC_URL}/validate-token?email=${to}&token=${token}`}
     />
   );
   return html;
