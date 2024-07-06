@@ -14,6 +14,7 @@ import Loading from "../loading";
 import { Select, SelectItem } from "@nextui-org/select";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 type Props = {
   accountId: string;
@@ -44,8 +45,15 @@ export default function AddToWorkspaceModal({ accountId }: Props) {
       onClose();
     },
     onError: (error: any) => {
-      console.error(error);
-      toast.error("Something went wrong");
+      let errorMessage = "Something went wrong";
+      if (axios.isAxiosError(error) && error.response) {
+        errorMessage =
+          error.response.data.message || error.message || errorMessage;
+      } else if (error instanceof Error) {
+        errorMessage = error.message || errorMessage;
+      }
+      console.error(errorMessage);
+      toast.error(errorMessage);
       setIsSubmitting(false);
     },
   });
