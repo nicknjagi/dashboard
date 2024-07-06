@@ -32,7 +32,7 @@ export function UserInfo({
 
   return (
     <div>
-      {(isLoading || workspaceQuery.isLoading) && (
+      {(isLoading) && (
         <SkeletonTheme baseColor="#014d4d" highlightColor="#026666">
           <Skeleton width={200} height={35} />
           <Skeleton width={150} height={20} />
