@@ -39,7 +39,7 @@ export default function SessionsList({workspace}:Props) {
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-end gap-2">
           <Link href={"/workspaces"} className="text-neutral-300">
-            {"workspaces"}
+            {"back"}
             <span className="ml-2 text-xl text-neutral-500">/</span>
           </Link>
           <h1 className={"text-lg md:text-2xl font-medium"}>{workspace?.name}</h1>
@@ -47,7 +47,7 @@ export default function SessionsList({workspace}:Props) {
         <CreateSessionModal />
       </div>
       <section>
-        <h3 className="my-2 font-medium">Sessions</h3>
+        <h3 className="my-2 font-medium text-lg">Sessions</h3>
         <div className="flex flex-wrap justify-center md:justify-start gap-4 md:gap-6">
           {data.items.map((session: Session) => {
             // Add the 'T' separator to the date string
