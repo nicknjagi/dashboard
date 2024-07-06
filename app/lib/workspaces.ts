@@ -132,8 +132,14 @@ export async function addToWorkspace(accountId: string, workspaceId: string): Pr
 
     return patchResponse.data;
   } catch (error) {
-    console.error('Error updating account:', error);
-    throw new Error('Error updating account')
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.response?.data?.message || error.message || 'Unknown error';
+      console.error('Error updating account:', errorMessage);
+      throw new Error(errorMessage);
+    } else {
+      console.error('Error updating account:', error);
+      throw new Error('Error updating account');
+    }
   }
 }
 
