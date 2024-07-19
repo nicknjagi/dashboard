@@ -8,6 +8,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import AddToWorkspaceModal from "./modals/addToWorkspaceModal";
 import { getWorkspaceByAccountId } from "@/app/lib/workspaces";
 import RemoveFromWorkspace from "./removeFromWorkspace";
+import { usePathname } from "next/navigation";
 
 export function UserInfo({
   userId,
@@ -16,6 +17,8 @@ export function UserInfo({
   userId: string;
   accountId: string;
 }) {
+  const pathname = usePathname();
+  
   const workspaceQuery = useQuery({
     queryKey: ["workspaceForAccount", accountId],
     queryFn: () => getWorkspaceByAccountId(accountId),
@@ -54,16 +57,19 @@ export function UserInfo({
             {data?.user.email_addresses[0].email_address}
           </User>
           <div className="w-fit mr-auto">
-            {workspaceQuery.data?.items[0] ? (
+            {pathname.includes('/workspace') ? (
               <RemoveFromWorkspace
                 accountId={accountId}
                 workspaceDetails={workspaceQuery.data?.items[0]}
               />
-            ) : null}
-            {!workspaceQuery.data?.items[0] && (
+            ) : <AddToWorkspaceModal accountId={accountId} />}
+            {/* {!workspaceQuery.data?.items[0] && (
               <AddToWorkspaceModal accountId={accountId} />
-            )}
+            )} */}
           </div>
+          {/* <div className="w-fit mr-auto">
+            <AddToWorkspaceModal accountId={accountId} />
+          </div> */}
         </div>
       )}
     </div>
