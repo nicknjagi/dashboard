@@ -44,7 +44,7 @@ export default function RemoveFromWorkspace({ accountId, workspaceDetails }: Pro
         disabled={isSubmitting}
         isLoading={isSubmitting}
       >
-        {isSubmitting ? "removing from workspace..." : `Remove from ${workspaceDetails.name}`}
+        {isSubmitting ? "removing from workspace..." : `Remove from workspace`}
       </Button>
     </>
   );
