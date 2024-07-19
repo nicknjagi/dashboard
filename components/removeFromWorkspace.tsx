@@ -8,15 +8,15 @@ import toast from "react-hot-toast";
 
 type Props = {
   accountId: string;
-  workspaceDetails: {id:string;name:string;}
+  workspaceId: string;
 };
 
-export default function RemoveFromWorkspace({ accountId, workspaceDetails }: Props) {
+export default function RemoveFromWorkspace({ accountId, workspaceId}: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: () => removeFromWorkspace(accountId, workspaceDetails.id),
+    mutationFn: () => removeFromWorkspace(accountId, workspaceId),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ["workspaceForAccount"]}),
       queryClient.invalidateQueries({queryKey: ["getWorkspace"]})
