@@ -6,25 +6,19 @@ import { useQuery } from "@tanstack/react-query";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import AddToWorkspaceModal from "./modals/addToWorkspaceModal";
-import { getWorkspaceByAccountId } from "@/app/lib/workspaces";
 import RemoveFromWorkspace from "./removeFromWorkspace";
 import { usePathname } from "next/navigation";
 
 export function UserInfo({
   userId,
   accountId,
+  workspaceId
 }: {
   userId: string;
   accountId: string;
+  workspaceId: string;
 }) {
   const pathname = usePathname();
-  
-  const workspaceQuery = useQuery({
-    queryKey: ["workspaceForAccount", accountId],
-    queryFn: () => getWorkspaceByAccountId(accountId),
-    refetchOnMount: true,
-    staleTime: 0,
-  });
 
   const { data, error, isLoading } = useQuery({
     queryKey: ["getUserData", userId],
@@ -41,7 +35,7 @@ export function UserInfo({
           <Skeleton width={150} height={20} />
         </SkeletonTheme>
       )}
-      {(error || workspaceQuery.error) && <p>{error?.message}</p>}
+      {(error) && <p>{error?.message}</p>}
       {data?.user && (
         <div className="flex flex-col gap-1">
           <User
@@ -60,16 +54,10 @@ export function UserInfo({
             {pathname.includes('/workspace') ? (
               <RemoveFromWorkspace
                 accountId={accountId}
-                workspaceDetails={workspaceQuery.data?.items[0]}
+                workspaceId={workspaceId}
               />
             ) : <AddToWorkspaceModal accountId={accountId} />}
-            {/* {!workspaceQuery.data?.items[0] && (
-              <AddToWorkspaceModal accountId={accountId} />
-            )} */}
           </div>
-          {/* <div className="w-fit mr-auto">
-            <AddToWorkspaceModal accountId={accountId} />
-          </div> */}
         </div>
       )}
     </div>
