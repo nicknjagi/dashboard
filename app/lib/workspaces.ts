@@ -49,6 +49,21 @@ export async function getWorkspaceNames() {
   }
 }
 
+export async function getWorkspacesWithAccountId(accountId: string) {
+  try {
+    const url = `${BASE_URL}/api/collections/workspaces/records?filter=(users~"${accountId}")&fields=id`
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${pb.authStore.token}`
+      }
+    })
+    return response.data
+  } catch (error) {
+    console.error('Error fetching workspace names:', error);
+    throw new Error('Error fetching workspace names')
+  }
+}
+
 export async function workspacesCount() {
   try {
     const url = `${BASE_URL}/api/collections/workspaces/records?fields=totalItems`
@@ -66,7 +81,7 @@ export async function workspacesCount() {
 
 export async function createWorkspace(data: TWorkspaceSchema): Promise<any> {
   const user = pb.authStore.model as User
-  
+
   if (user.AccountType !== 'ADMIN') {
     toast.error('Not authorized')
     return
@@ -108,29 +123,38 @@ export async function updateWorkspace(data: Workspace): Promise<any> {
   }
 }
 
-export async function addToWorkspace(accountId: string, workspaceId: string): Promise<any> {
+export async function addToWorkspace(accountId: string, workspaceIds: string[]): Promise<any> {
   try {
-    // Fetch the current workspace data
-    const getUrl = `${BASE_URL}/api/collections/workspaces/records/${workspaceId}?fields=users`;
-    const getResponse = await axios.get(getUrl, {
-      headers: {
-        Authorization: `Bearer ${pb.authStore.token}`
+    const results = await Promise.all(workspaceIds.map(async (workspaceId) => {
+      const getUrl = `${BASE_URL}/api/collections/workspaces/records/${workspaceId}?fields=users`;
+      const getResponse = await axios.get(getUrl, {
+        headers: {
+          Authorization: `Bearer ${pb.authStore.token}`
+        }
+      });
+      const { users } = getResponse.data;
+
+      // Check if the accountId already exists in the users array
+      if (users.includes(accountId)) {
+        console.log(`Account ID ${accountId} already exists in workspace ${workspaceId}`);
+        return getResponse.data; // No update needed
       }
-    });
-    const {users} = getResponse.data;
+
+      // Append the new accountId to the users array
+      const updatedUsers = [...users, accountId];
+  
+      // Update the workspace with the new users array
+      const patchUrl = `${BASE_URL}/api/collections/workspaces/records/${workspaceId}`;
+      const patchResponse = await axios.patch(patchUrl, { users: updatedUsers }, {
+        headers: {
+          Authorization: `Bearer ${pb.authStore.token}`
+        }
+      });
+
+      return patchResponse.data;
+    }));
     
-    // Append the new accountId to the users array
-    const updatedUsers = [...users, accountId];
-
-    // Update the workspace with the new users array
-    const patchUrl = `${BASE_URL}/api/collections/workspaces/records/${workspaceId}`;
-    const patchResponse = await axios.patch(patchUrl, { users: updatedUsers }, {
-      headers: {
-        Authorization: `Bearer ${pb.authStore.token}`
-      }
-    });
-
-    return patchResponse.data;
+    return results;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.message || error.message || 'Unknown error';
@@ -153,7 +177,7 @@ export async function removeFromWorkspace(accountId: string, workspaceId: string
       }
     });
     const { users } = getResponse.data;
-    
+
     // Remove the accountId from the users array
     const updatedUsers = users.filter((userId: string) => userId !== accountId);
 
@@ -195,7 +219,7 @@ export async function getWorkspaceByAccountId(accountId: string): Promise<any> {
         Authorization: `Bearer ${pb.authStore.token}`,
       },
     });
-    
+
     return response.data;
   } catch (error) {
     console.error('Error fetching workspace:', error);
