@@ -1,6 +1,6 @@
 "use client";
 
-import { addToWorkspace, getWorkspaceNames } from "@/app/lib/workspaces";
+import { addToWorkspace, getWorkspaceNames, getWorkspacesWithAccountId } from "@/app/lib/workspaces";
 import { Button } from "@nextui-org/button";
 import {
   Modal,
@@ -12,7 +12,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Loading from "../loading";
 import { Select, SelectItem } from "@nextui-org/select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 
@@ -22,25 +22,40 @@ type Props = {
 
 type AddToWorkspaceInput = {
   accountId: string;
-  workspaceId: string;
+  workspaceIds: string[];
 };
 
 export default function AddToWorkspaceModal({ accountId }: Props) {
-  const [workspaceId, setWorkspaceId] = useState("");
+  const [workspaceIdsArray, setWorkspaceIdsArray] = useState<string[]>([]);
+  const [workspaceIds, setWorkspaceIds] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+
   const { data, error, isLoading } = useQuery({
     queryKey: ["workspaceNames"],
     queryFn: getWorkspaceNames,
   });
+
+  const { data: defaultWorkspaces, error: defaultWorkspacesError, isLoading: defaultWorkspacesLoading } = useQuery({
+    queryKey: ["workspacesWithAccount", accountId],
+    queryFn: () => getWorkspacesWithAccountId(accountId)
+  });
+
+  useEffect(() => {
+    if (defaultWorkspaces?.items) {
+      const idsArray = defaultWorkspaces.items.map((item: { id: string }) => item.id);
+      setWorkspaceIdsArray(idsArray);      
+    }
+  }, [defaultWorkspaces]);
+
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: ({ accountId, workspaceId }: AddToWorkspaceInput) =>
-      addToWorkspace(accountId, workspaceId),
+    mutationFn: ({ accountId, workspaceIds }: AddToWorkspaceInput) =>
+      addToWorkspace(accountId, workspaceIds),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["workspaceForAccount"] });
-      // toast.success("Added to workspace successfully");
+      queryClient.invalidateQueries({ queryKey: ["workspacesWithAccount"] });
       setIsSubmitting(false);
       onClose();
     },
@@ -59,14 +74,13 @@ export default function AddToWorkspaceModal({ accountId }: Props) {
   });
 
   const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setWorkspaceId(e.target.value);
+    setWorkspaceIds(e.target.value);
   };
-
+  
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setIsSubmitting(true);
-    mutation.mutate({ accountId, workspaceId });
-  }
+    mutation.mutate({ accountId, workspaceIds: workspaceIds.split(',') });
+  }  
 
   return (
     <>
@@ -93,11 +107,10 @@ export default function AddToWorkspaceModal({ accountId }: Props) {
                 Add to workspace
               </ModalHeader>
               <ModalBody>
-                {isLoading && <Loading />}
+                {(isLoading && defaultWorkspacesLoading) && <Loading />}
                 {error && <p>Something went wrong.</p>}
                 <form onSubmit={handleSubmit} className="flex gap-4 items-end">
                   <Select
-                    isRequired
                     items={data?.items}
                     label="Choose workspace"
                     className="block max-w-[200px]"
@@ -106,8 +119,11 @@ export default function AddToWorkspaceModal({ accountId }: Props) {
                       trigger: "border border-cultured/30",
                     }}
                     variant="bordered"
+                    selectionMode="multiple"
                     size="sm"
                     onChange={handleSelectionChange}
+                    value={workspaceIds}
+                    defaultSelectedKeys={workspaceIdsArray}
                   >
                     {(item: { id: string; name: string }) => (
                       <SelectItem key={item.id}>{item.name}</SelectItem>
@@ -132,3 +148,4 @@ export default function AddToWorkspaceModal({ accountId }: Props) {
     </>
   );
 }
+
