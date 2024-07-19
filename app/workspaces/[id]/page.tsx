@@ -12,7 +12,7 @@ type Props = {};
 export default function Sessions({}: Props) {
   const { id } = useParams();
   const { data: workspace, isLoading, error } = useQuery({
-    queryKey: ["getWorkspace"],
+    queryKey: ["getWorkspace", id],
     queryFn: () => getWorkspace(id as string),
   });
 
@@ -27,7 +27,7 @@ export default function Sessions({}: Props) {
   return (
     <div className="py-2">
       <SessionsList workspace={workspace}/>
-      <WorkspaceUsers accounts={workspace?.expand?.users} />
+      <WorkspaceUsers accounts={workspace?.expand?.users} workspaceId={id as string}/>
     </div>
   );
 }
