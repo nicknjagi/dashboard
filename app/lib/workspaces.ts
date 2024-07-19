@@ -211,18 +211,3 @@ export async function deleteWorkspace(id: string) {
   }
 }
 
-export async function getWorkspaceByAccountId(accountId: string): Promise<any> {
-  try {
-    const url = `${BASE_URL}/api/collections/workspaces/records?filter=(users~"${accountId}")&fields=name,id`;
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${pb.authStore.token}`,
-      },
-    });
-
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching workspace:', error);
-    throw new Error('Error fetching workspace');
-  }
-}
