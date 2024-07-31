@@ -3,6 +3,7 @@
 import { Button } from "@nextui-org/button";
 import clsx from "clsx";
 import {
+  DoorOpen,
   LayoutDashboard,
   Library,
   LucideIcon,
@@ -67,7 +68,13 @@ export const links: LinkNav[] = [
     href: "/library",
     icon: Library,
     roles: ["ADMIN", "FACILITATOR"],
-  }
+  },
+  {
+    title: "Listings",
+    href: "/listings",
+    icon: DoorOpen,
+    roles: ["ADMIN", "FACILITATOR"],
+  },
 ];
 
 export const hideRoutes: string[] = ["/create-account", "/login", "/validate-token"];
