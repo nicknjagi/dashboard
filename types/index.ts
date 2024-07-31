@@ -233,3 +233,26 @@ export type Session = {
   link_to_session: string;
   duration_in_hours: number;
 }
+
+export type Listing = {
+  id: string;
+  collectionId: string;
+  collectionName: string;
+  created: string;
+  updated: string;
+  logo: string;
+  name: string;
+  email: string;
+  address: string;
+  description: string;
+  phone_number: string;
+  account: string;
+  sector: string;
+  sector_subcategory: string;
+  published: boolean;
+  verified: boolean;
+  valid_until: string;
+  website: string;
+  userId: string;
+  listing_code: string;
+};
