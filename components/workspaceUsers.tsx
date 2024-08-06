@@ -22,7 +22,6 @@ export default function WorkspaceUsers({ accounts, workspaceId }: Props) {
               <UserInfo
                 userId={account.userId}
                 accountId={account.id}
-                workspaceId={workspaceId}
               />
             </div>
           ))
