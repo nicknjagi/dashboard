@@ -11,12 +11,10 @@ import { usePathname } from "next/navigation";
 
 export function UserInfo({
   userId,
-  accountId,
-  workspaceId
+  accountId
 }: {
   userId: string;
   accountId: string;
-  workspaceId: string;
 }) {
   const pathname = usePathname();
 
@@ -54,7 +52,6 @@ export function UserInfo({
             {pathname.includes('/workspace') ? (
               <RemoveFromWorkspace
                 accountId={accountId}
-                workspaceId={workspaceId}
               />
             ) : <AddToWorkspaceModal accountId={accountId} />}
           </div>
